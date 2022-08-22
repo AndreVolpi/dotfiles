@@ -11,6 +11,7 @@ sudo apt install -y golang-go
 sudo apt install -y tmux
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+source ~/.bashrc
 nvm install node
 nvm use node
 
@@ -25,14 +26,14 @@ dpkg -i -y ~/esl-erlang_21.deb
 
 git clone https://github.com/erlang/rebar3.git ~/.rebar3
 ~/.rebar3/bootstrap
-~/rebar3/rebar3 local install
+~/.rebar3/rebar3 local install
 
 sudo snap install -y neovim
 sudo apt install -y -- python3-venv
-pip install -y neovim
+pip install neovim
 
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+~/.fzf/install -y
 
 pip3 install -U gita
 git clone https://github.com/wfxr/forgit.git ~/.forgit
@@ -56,7 +57,7 @@ npm i -g bash-language-server
 
 npm i -g dockerfile-language-server-nodejs
 
-git clone https://github.com/erlang-ls/erlang_ls.git ~/.erlang_ls
+git clone -b --single-branch https://github.com/erlang-ls/erlang_ls.git ~/.erlang_ls
 cd ~/.erlang_ls
 make
 make install
@@ -74,4 +75,6 @@ sudo apt install -y terraform-ls
 
 npm i -g vim-language-server
 
-yarn global add yaml-language-server
+sudo yarn global add yaml-language-server
+
+curl https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh > ~/.bash-powerline.sh
