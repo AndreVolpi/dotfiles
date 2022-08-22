@@ -1,0 +1,315 @@
+set nocompatible              " Required
+filetype off                  " Required
+
+" ====================== General Config ===================
+
+set clipboard=unnamedplus
+
+set showcmd                  "  Show incomplete cmds down the bottom
+set showmode                 "  Show current mode down the bottom
+set number relativenumber    "  Show line numbers
+set autoread                 "  Reload files changed outside of Vim
+
+set hidden                   "  Hide buffers when not displayed
+set cmdheight=2              "  Larger command space
+set updatetime=300           "  Shorter update time
+set colorcolumn=120          "  Marks the line length limit
+
+" ====================== Turn Off Swap Files ==============
+
+set noswapfile
+set nobackup
+set nowb
+
+" ====================== Folds ============================
+
+set foldmethod=syntax        "  Fold based on indent
+set foldnestmax=5            "  Deepest fold is 5 levels
+set nofoldenable             "  Dont fold by default
+
+" ===================== Scrolling ========================
+
+set scrolloff=8              " Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=1
+
+" ====================== Mouse ============================
+
+set mouse=a
+
+" ====================== Search ===========================
+
+set incsearch                "  Find the next match as we type the search
+set hlsearch                 "  Highlight searches by default
+set ignorecase               "  Ignore case when searching...
+set smartcase                "   ...unless we type a capital
+
+" ====================== Indentation ======================
+
+set autoindent
+set smartindent
+set smarttab
+set expandtab
+
+filetype plugin on
+filetype indent on
+
+" Display tabs and trailing spaces visually
+set list listchars=tab:\ \ ,trail:·
+
+set linebreak                " Wrap lines at convenient points
+
+" ====================== Custom Settings ==================
+
+" Window pane resizing
+nnoremap <silent> <Leader>[ :exe " resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>] :exe " resize " . (winheight(0) * 2/3)<CR>
+
+" Key mapping for window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+" Set types
+autocmd FileType c,h,cpp,hpp setl cindent ts=4 sts=4 sw=4 noet nolist
+autocmd FileType asm setl ts=8 sts=8 sw=8 noet
+autocmd FileType go setl ts=4 sts=4 sw=4 noet commentstring=\/\/\ %s
+autocmd FileType python setl ts=4 sts=4 sw=4
+autocmd FileType make,automake setl ts=4 sts=4 sw=4 noet
+autocmd FileType erlang setl ts=4 sts=4 sw=4
+autocmd FileType javascript setl ts=4 sts=4 sw=4
+autocmd FileType vimwiki set ft=markdown
+autocmd BufRead *.clj let b:delimitMate_quotes="\""
+autocmd BufRead *irb-interactive* setl ft=ruby
+autocmd BufRead nginx.conf setl ft=nginx
+
+" Y = yank to EOL
+map Y y$
+
+" ========================= Plug ========================
+
+set shell=/bin/bash
+set t_Co=256
+
+call plug#begin('~/.vim/plugged')
+  Plug 'thaerkh/vim-workspace' " Workspace tracker
+  Plug 'vim-airline/vim-airline' " Status bar
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'jalvesaq/southernlights' " Theme
+  Plug 'navarasu/onedark.nvim' " Theme
+
+  Plug 'luochen1990/rainbow' " Brackets matcher and highlighter
+  Plug 'qstrahl/vim-matchmaker' " Matching word highlighter
+  Plug 'tpope/vim-commentary' " Commentary handler
+
+  " Git
+  Plug 'godlygeek/csapprox' " Required by vim-fugitive
+  Plug 'tpope/vim-fugitive'
+  Plug 'shumphrey/fugitive-gitlab.vim'
+  Plug 'lewis6991/gitsigns.nvim'
+
+  Plug 'terryma/vim-multiple-cursors'
+  Plug 'wellle/visual-split.vim'
+
+  Plug 'dyng/ctrlsf.vim' " Workspace search
+
+  " Syntax
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+  Plug 'davidhalter/jedi-vim'
+  Plug 'Yggdroot/indentLine'
+  Plug 'tpope/vim-surround'
+
+  Plug 'liuchengxu/vista.vim'
+
+  " File exploration
+  Plug 'kien/ctrlp.vim'
+  Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+  "Plug 'scrooloose/nerdtree'
+  "Plug 'Xuyuanp/nerdtree-git-plugin'
+  "Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'romgrk/barbar.nvim'
+  Plug 'dstein64/nvim-scrollview'
+
+  Plug 'vimwiki/vimwiki'
+call plug#end()
+
+" ====================== Plugin Settings ==================
+
+" Rainbow
+  let g:rainbow_active=1
+
+" Colorscheme
+  let g:onedark_config = { 'style': 'darker', 'transparent': v:true, 'highlights': { 'Matchmaker': { 'fmt': 'underline', 'bg': '#242026' }}}
+  colorscheme onedark
+
+" Workspace
+  let g:workspace_autocreate = 1
+  let g:workspace_create_new_tabs = 0
+  let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+  let g:workspace_undodir = $HOME . '/.vim/undodirs/'
+
+" CHADTree
+  nnoremap <leader>p <cmd>CHADopen<cr>
+
+" NerdTree
+  "nmap wm :NERDTree<cr>
+  "let NERDTreeIgnore=['\.swp$']
+  "silent! nmap <silent> <Leader>p :NERDTreeToggle<CR>
+
+" CtrlSF
+  let g:ctrlsf_default_root='project'
+  let g:ctrlsf_regex_pattern=1
+  let g:ctrlsf_search_mode='async'
+
+  nmap     <C-F>f <Plug>CtrlSFPrompt
+  vmap     <C-F>f <Plug>CtrlSFVwordPath
+  vmap     <C-F>F <Plug>CtrlSFVwordExec
+  nmap     <C-F>n <Plug>CtrlSFCwordPath
+  nmap     <C-F>p <Plug>CtrlSFPwordPath
+  nnoremap <C-F>t :CtrlSFToggle<CR>
+
+" Ctrl+P
+  let g:ctrlp_max_files=0
+  let g:ctrlp_max_depth=100
+  let g:ctrlp_custom_ignore='node_modules\|DS_Store\|git\|_compiled\|_build'
+
+" Barbar
+  set termguicolors
+
+  let bufferline = get(g:, 'bufferline', {})
+  let bufferline.auto_hide = v:false
+  let bufferline.closable = v:true
+  let bufferline.clickable = v:true
+  let bufferline.icons = 'both'
+  let bufferline.icon_custom_colors = v:false
+
+  " Move to previous/next
+  nnoremap <silent>    <A-,> :BufferPrevious<CR>
+  nnoremap <silent>    <A-.> :BufferNext<CR>
+  " Re-order to previous/next
+  nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
+  nnoremap <silent>    <A->> :BufferMoveNext<CR>
+  nnoremap <silent>    <A-0> :BufferLast<CR>
+  " Close buffer
+  nnoremap <silent>    <A-c> :BufferClose<CR>
+
+" Scrollview
+  let g:scrollview_excluded_filetypes = ['nerdtree']
+  let g:scrollview_current_only = v:true
+
+" Airline
+  let g:airline_powerline_fonts=1
+  let g:airline_stl_path_style='short'
+  let g:airline_section_c=''
+  let g:airline#extensions#coc#enabled=1
+  let g:airline#extensions#hunks#enabled=1
+  let g:airline_theme='onedark'
+
+"Fugitive
+  let g:fugitive_gitlab_domains = ['https://cahrh-gitlab.creative-assembly.com']
+  let g:netrw_browsex_viewer = 'wslview'
+
+" Gitsigns
+lua << EOF
+  require('gitsigns').setup {
+    word_diff  = true, -- Toggle with `:Gitsigns toggle_word_diff`
+    current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+
+    on_attach = function(bufnr)
+      local function map(mode, lhs, rhs, opts)
+        opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
+        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+      end
+
+      -- Navigation
+      map('n', ']g', "&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
+      map('n', '[g', "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
+
+      -- Actions
+      map('n', '<leader>hs', ':Gitsigns stage_hunk<CR>')
+      map('v', '<leader>hs', ':Gitsigns stage_hunk<CR>')
+      map('n', '<leader>hr', ':Gitsigns reset_hunk<CR>')
+      map('v', '<leader>hr', ':Gitsigns reset_hunk<CR>')
+      map('n', '<leader>hS', '<cmd>Gitsigns stage_buffer<CR>')
+      map('n', '<leader>hu', '<cmd>Gitsigns undo_stage_hunk<CR>')
+      map('n', '<leader>hR', '<cmd>Gitsigns reset_buffer<CR>')
+      map('n', '<leader>hp', '<cmd>Gitsigns preview_hunk<CR>')
+      map('n', '<leader>hb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
+      map('n', '<leader>tb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
+      map('n', '<leader>hd', '<cmd>Gitsigns diffthis<CR>')
+      map('n', '<leader>hD', '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+      map('n', '<leader>td', '<cmd>Gitsigns toggle_deleted<CR>')
+
+      -- Text object
+      map('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+      map('x', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    end
+  }
+EOF
+
+" Matchmaker
+  let g:matchmaker_enable_startup = 1
+  let g:matchmaker_ignore_single_match = 1
+
+" Vista
+  let g:vista_default_executive = 'nvim_lsp'
+  silent! nmap <silent> <Leader>v :Vista!!<CR>
+
+" VimWiki
+  let g:vimwiki_list = [{ 'path': '~/notes/', 'syntax':'markdown', 'ext': '.md' }]
+
+" COQ
+let g:coq_settings = { 'auto_start': v:true }
+
+" LSP
+lua << EOF
+  local lsp = require "lspconfig"
+  local coq = require "coq"
+
+  -- Mappings.
+  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+  local opts = { noremap=true, silent=true }
+  vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+
+  -- Use an on_attach function to only map the following keys
+  -- after the language server attaches to the current buffer
+  local on_attach = function(client, bufnr)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  end
+
+  
+  -- Use a loop to conveniently call 'setup' on multiple servers and
+  -- map buffer local keybindings when the language server attaches
+  local servers = { 'bashls', 'dockerls', 'erlangls', 'jedi_language_server', 'jsonls', 'gopls', 'pyright', 'terraformls', 'vimls', 'yamlls' }
+  for _, lsp in pairs(servers) do
+    require('lspconfig')[lsp].setup(coq.lsp_ensure_capabilities({
+      on_attach = on_attach,
+      flags = {
+        -- This will be the default in neovim 0.7+
+        debounce_text_changes = 150,
+      }
+    }))
+  end
+EOF

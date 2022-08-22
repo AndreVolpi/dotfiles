@@ -1,0 +1,36 @@
+[user]
+  name = Andre Volpi
+  email = andre.volpi@creative-assembly.com
+  # signingkey = XXXXXXXXX
+[pull]
+  rebase = true
+[commit]
+  gpgSign = true
+  verbose = true
+[color]
+  ui = true
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  new = green bold
+[alias]
+  st = status -sb
+  ci = commit -S -v
+  mi = merge -S
+  co = checkout
+  br = branch -vv
+  ps = push -v
+  lg = log --oneline --graph
+[push]
+  default = simple
+[apply]
+  whitespace = fix
+[core]
+  excludesfile = ~/.gitignore_global
+  editor = nvim
+[gpg]
+  program = gpg2
