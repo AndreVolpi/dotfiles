@@ -23,7 +23,7 @@ sudo apt install -y --no-install-recommends yarn
 yarn config set prefix /usr/local/
 
 wget https://packages.erlang-solutions.com/erlang/{{- .chezmoi.osRelease.idLike -}}/pool/esl-erlang_21.3.8.17-1~{{- .chezmoi.osRelease.id -}}~{{- .chezmoi.osRelease.versionCodename -}}_amd64.deb -O ~/esl-erlang_21.deb
-dpkg -i -y ~/esl-erlang_21.deb
+sudo dpkg -i ~/esl-erlang_21.deb
 
 git clone https://github.com/erlang/rebar3.git ~/.rebar3
 ~/.rebar3/bootstrap
@@ -34,7 +34,7 @@ sudo apt install -y -- python3-venv
 pip install neovim
 
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install -y
+~/.fzf/install --key-bindings --completion --update-rc
 
 pip3 install -U gita
 git clone https://github.com/wfxr/forgit.git ~/.forgit
