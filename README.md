@@ -2,12 +2,29 @@
 
 ## Setup
 
-These dotfiles are managed with [chezmoi](https://github.com/twpayne/chezmoi).
+These dotfiles are managed with [Nix](https://nixos.org/) and [Home Manager](https://github.com/nix-community/home-manager).
 
-Install them with:
-
+- Installing Nix (example for linux, check Nix documentation for other OS)
 ```sh
-sh -c "$(curl -fsLS https://chezmoi.io/get)" -- init --apply AndreVolpi
+sh <(curl -L https://nixos.org/nix/install) --daemon
+```
+
+- Installing Home Manager
+```sh
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
+```
+
+- Installing these Dotfiles
+```sh
+git clone https://github.com/AndreVolpi/dotfiles.git ~/dotfiles
+ln -fs ~/dotfiles/home.nix ~/.config/home-manager/home.nix
+```
+
+- Activate the environment
+```sh
+home-manager switch
 ```
 
 ## Details
