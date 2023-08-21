@@ -6,7 +6,7 @@ These dotfiles are managed with [Nix](https://nixos.org/) and [Home Manager](htt
 
 - Installing Nix (example for linux, check Nix documentation for other OS)
 ```sh
-sh <(curl -L https://nixos.org/nix/install) --daemon
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
 - Installing Home Manager
