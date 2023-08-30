@@ -35,14 +35,10 @@ To use it with other systems, code changes are likely to be needed. Feel free to
 
 Below is the list of installed and configured packages:
 
-- [Bash](https://www.gnu.org/software/bash/)
+- [Fish](https://fishshell.com)
 - [Tmux](https://github.com/tmux/tmux)
 - [git](https://git-scm.com/)
   - [gita](https://github.com/nosarthur/gita)
-- [Node](https://nodejs.org)
-  - Via [Node Version Manager](https://github.com/nvm-sh/nvm)
-  - [Yarn](https://yarnpkg.com/)
-  - [NPM](https://www.npmjs.com/)
 - [exa](https://the.exa.website)
 - [FZF](https://github.com/junegunn/fzf)
 - [Forgit](https://github.com/wfxr/forgit)
