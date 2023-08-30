@@ -448,6 +448,9 @@ in {
       vim-expand-region
       vim-visual-increment
       text-case-nvim
+      context-vim
+      train-nvim
+      clever-f-vim
       (fromGitHub "HEAD" "chrisgrieser/nvim-origami")
       (fromGitHub "HEAD" "anuvyklack/keymap-amend.nvim")
       (fromGitHub "HEAD" "anuvyklack/fold-preview.nvim")
@@ -622,6 +625,9 @@ in {
       require('telescope').load_extension('textcase')
       vim.api.nvim_set_keymap('n', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = "Telescope text-case-nvim" })
       vim.api.nvim_set_keymap('v', 'ga.', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope text-case-nvim" })
+
+      -- Clever-f
+      vim.g.clever_f_smart_case = true
     '';
 
     plugins = {
