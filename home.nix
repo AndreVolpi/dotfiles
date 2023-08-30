@@ -307,7 +307,7 @@ in {
     ignores = [ ];
 
     signing = {
-      signByDefault = false;
+      signByDefault = true;
       key = "EC9829DE50E51516";
     };
 
