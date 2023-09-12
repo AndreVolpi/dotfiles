@@ -299,7 +299,10 @@ in {
           new = "green bold";
         };
       };
-      push = { default = "simple"; };
+      push = {
+        default = "simple";
+        autoSetupRemote = "true";
+      };
       apply = { whitespace = "fix"; };
       core = { editor = "nvim"; };
     };
