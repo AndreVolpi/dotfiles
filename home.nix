@@ -378,37 +378,76 @@ in {
       shiftwidth = 2;
     };
 
-    maps = {
-      normalVisualOp."<C-h>" = "<C-w>h";
-      normalVisualOp."<C-j>" = "<C-w>j";
-      normalVisualOp."<C-k>" = "<C-w>k";
-      normalVisualOp."<C-l>" = "<C-w>l";
-      normalVisualOp."Y" = "y$";
-      normal."<A-,>" = {
+    keymaps = [
+      {
+        key = "<C-h>";
+        action = "<C-w>h";
+      }
+      {
+        key = "<C-j>";
+        action= "<C-w>j";
+      }
+      {
+        key = "<C-k>";
+        action = "<C-w>k";
+      }
+      {
+        key = "<C-l>";
+        action = "<C-w>l";
+      }
+      {
+        key = "Y";
+        action = "y$";
+      }
+      {
+        mode = "n";
+        key = "<A-,>";
         action = "<cmd>BufferPrevious<CR>";
-        silent = true;
-      };
-      normal."<A-.>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A-.>";
         action = "<cmd>BufferNext<CR>";
-        silent = true;
-      };
-      normal."<A-<>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A-<>";
         action = "<cmd>BufferMovePrevious<CR>";
-        silent = true;
-      };
-      normal."<A->>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A->>";
         action = "<cmd>BufferMoveNext<CR>";
-        silent = true;
-      };
-      normal."<A-0>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A-0>";
         action = "<cmd>BufferLast<CR>";
-        silent = true;
-      };
-      normal."<A-c>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A-c>";
         action = "<cmd>BufferClose<CR>";
-        silent = true;
-      };
-    };
+        options = {
+          silent = true;
+        };
+      }
+    ];
 
     autoCmd = [
       {
