@@ -505,6 +505,8 @@ in {
     ];
 
     extraConfigLua = /* lua */ ''
+      vim.o.foldenable = false
+
       -- Rainbow
       vim.g.rainbow_active = "1"
 
