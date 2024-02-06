@@ -21,9 +21,16 @@ in {
 
   home.stateVersion = "23.05";
 
+  nixpkgs.config.allowUnfree = true;
+
   home.packages = let
     nixpkgs2211 = import <nixos-22.11> {
       config = { permittedInsecurePackages = [ "erlang-21.3.8.24" ]; };
+    };
+    terraform_1_4_5 = pkgs.mkTerraform {
+      version = "1.4.5";
+      hash = "sha256-mnJ9d3UHAZxmz0i7PH0JF5gA3m3nJxM2NyAn0J0L6u8=";
+      vendorHash = "sha256-3ZQcWatJlQ6NVoPL/7cKQO6+YCSM3Ld77iLEQK3jBDE=";
     };
   in with pkgs; [
     gnumake
@@ -47,7 +54,7 @@ in {
     aws-vault
     awscli2
 
-    terraform
+    terraform_1_4_5
     terraform-ls
 
     python38
