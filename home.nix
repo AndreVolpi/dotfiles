@@ -16,8 +16,8 @@ let
 in {
   imports = [ nixvim.homeManagerModules.nixvim ];
 
-  home.username = "andre.volpi@ca.SEGA.Internal";
-  home.homeDirectory = "/home/andre.volpi@ca.SEGA.Internal";
+  home.username = builtins.getEnv "USER";
+  home.homeDirectory = builtins.getEnv "HOME";
 
   home.stateVersion = "23.05";
 
