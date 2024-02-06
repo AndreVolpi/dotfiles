@@ -103,9 +103,6 @@ in {
       # Terraform
       set -gx TERRAFORM_TOOLS_DIR $HOME/projects/liveservices/infrastructure/terraform-tools
 
-      # Forgit
-      set -gx FORGIT_NO_ALIASES true
-
       # Vi mode
       fish_vi_key_bindings
     '';
@@ -333,7 +330,7 @@ in {
     enableSshSupport = true;
   };
 
-  programs.exa = {
+  programs.eza = {
     enable = true;
     enableAliases = true;
     git = true;
