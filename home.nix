@@ -1,8 +1,11 @@
 { config, pkgs, lib, ... }:
 
 let
-  nixvim = import (builtins.fetchGit { url = "https://github.com/nix-community/nixvim"; });
-  fromGitHub = ref: repo: pkgs.vimUtils.buildVimPluginFrom2Nix {
+  nixvim = import (builtins.fetchGit {
+    url = "https://github.com/nix-community/nixvim";
+    ref = "nixos-23.05";
+  });
+  fromGitHub = ref: repo: pkgs.vimUtils.buildVimPlugin {
     pname = "${lib.strings.sanitizeDerivationName repo}";
     version = ref;
     src = builtins.fetchGit {
@@ -378,76 +381,37 @@ in {
       shiftwidth = 2;
     };
 
-    keymaps = [
-      {
-        key = "<C-h>";
-        action = "<C-w>h";
-      }
-      {
-        key = "<C-j>";
-        action= "<C-w>j";
-      }
-      {
-        key = "<C-k>";
-        action = "<C-w>k";
-      }
-      {
-        key = "<C-l>";
-        action = "<C-w>l";
-      }
-      {
-        key = "Y";
-        action = "y$";
-      }
-      {
-        mode = "n";
-        key = "<A-,>";
+    maps = {
+      normalVisualOp."<C-h>" = "<C-w>h";
+      normalVisualOp."<C-j>" = "<C-w>j";
+      normalVisualOp."<C-k>" = "<C-w>k";
+      normalVisualOp."<C-l>" = "<C-w>l";
+      normalVisualOp."Y" = "y$";
+      normal."<A-,>" = {
         action = "<cmd>BufferPrevious<CR>";
-        options = {
-          silent = true;
-        };
-      }
-      {
-        mode = "n";
-        key = "<A-.>";
+        silent = true;
+      };
+      normal."<A-.>" = {
         action = "<cmd>BufferNext<CR>";
-        options = {
-          silent = true;
-        };
-      }
-      {
-        mode = "n";
-        key = "<A-<>";
+        silent = true;
+      };
+      normal."<A-<>" = {
         action = "<cmd>BufferMovePrevious<CR>";
-        options = {
-          silent = true;
-        };
-      }
-      {
-        mode = "n";
-        key = "<A->>";
+        silent = true;
+      };
+      normal."<A->>" = {
         action = "<cmd>BufferMoveNext<CR>";
-        options = {
-          silent = true;
-        };
-      }
-      {
-        mode = "n";
-        key = "<A-0>";
+        silent = true;
+      };
+      normal."<A-0>" = {
         action = "<cmd>BufferLast<CR>";
-        options = {
-          silent = true;
-        };
-      }
-      {
-        mode = "n";
-        key = "<A-c>";
+        silent = true;
+      };
+      normal."<A-c>" = {
         action = "<cmd>BufferClose<CR>";
-        options = {
-          silent = true;
-        };
-      }
-    ];
+        silent = true;
+      };
+    };
 
     autoCmd = [
       {
@@ -675,16 +639,6 @@ in {
     '';
 
     plugins = {
-      auto-session = {
-        enable = true;
-        autoRestore.enabled = true;
-        autoSave.enabled = true;
-        autoSession = {
-          createEnabled = true;
-          useGitBranch = true;
-        };
-        sessionLens.loadOnSetup = true;
-      };
       airline = {
         enable = true;
         theme = "onedark";
@@ -765,7 +719,6 @@ in {
         folding = true;
       };
       luasnip.enable = true;
-      coverage.enable = true;
       nvim-cmp = {
         enable = true;
         mapping = {
