@@ -328,6 +328,7 @@ in {
     enable = true;
     enableFishIntegration = true;
     enableSshSupport = true;
+    pinentryFlavor = "gtk2";
   };
 
   programs.eza = {
