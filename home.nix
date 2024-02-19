@@ -32,6 +32,12 @@ in {
       hash = "sha256-mnJ9d3UHAZxmz0i7PH0JF5gA3m3nJxM2NyAn0J0L6u8=";
       vendorHash = "sha256-3ZQcWatJlQ6NVoPL/7cKQO6+YCSM3Ld77iLEQK3jBDE=";
     };
+    prevpkgs = import (builtins.fetchGit {
+       name = "Packages";
+       url = "https://github.com/NixOS/nixpkgs/";
+       ref = "refs/heads/nixos-23.05";
+       rev = "f21b6f77ac562732a4c9b8d1e5751c97853fe873";
+     }) {};
   in with pkgs; [
     gnumake
     gnupg
@@ -56,6 +62,7 @@ in {
 
     terraform_1_4_5
     terraform-ls
+    prevpkgs.terragrunt
 
     python38
     pyright
@@ -99,9 +106,11 @@ in {
       # AWS
       set -gx AWS_VAULT_BACKEND pass
       set -gx AWS_VAULT_PASS_PREFIX aws-vault
+      set -gx VAULT_LDAP_USER andre.volpi
 
       # Terraform
       set -gx TERRAFORM_TOOLS_DIR $HOME/projects/liveservices/infrastructure/terraform-tools
+      set -gx TG_TF_REGISTRY_TOKEN "glpat-Ko9VLmExNvAdYHRzQPsR"
 
       # Vi mode
       fish_vi_key_bindings
@@ -312,6 +321,14 @@ in {
       };
       apply = { whitespace = "fix"; };
       core = { editor = "nvim"; };
+      url = {
+        "https://oauth2:GITLAB_TOKEN@cahrh-gitlab.creative-assembly.com" = {
+          insteadOf = https://cahrh-gitlab.creative-assembly.com;
+        };
+        "https://oauth2:GITHUB_TOKEN@github.com" = {
+          insteadOf = https://github.com;
+        };
+      };
     };
 
     ignores = [ ];
