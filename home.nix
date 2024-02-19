@@ -479,6 +479,8 @@ in {
       context-vim
       train-nvim
       clever-f-vim
+      vim-signify
+      twilight-nvim
       (fromGitHub "HEAD" "chrisgrieser/nvim-origami")
       (fromGitHub "HEAD" "anuvyklack/keymap-amend.nvim")
       (fromGitHub "HEAD" "anuvyklack/fold-preview.nvim")
@@ -492,6 +494,15 @@ in {
 
     extraConfigLua = /* lua */ ''
       vim.o.foldenable = false
+
+      vim.api.nvim_create_autocmd('TextYankPost', {
+        group = vim.api.nvim_create_augroup('highlight_yank', {}),
+        desc = 'Hightlight selection on yank',
+        pattern = '*',
+        callback = function()
+          vim.highlight.on_yank { higroup = 'IncSearch', timeout = 500 }
+        end,
+      })
 
       -- Rainbow
       vim.g.rainbow_active = "1"
@@ -661,6 +672,15 @@ in {
     '';
 
     plugins = {
+      startify = {
+        enable = true;
+        bookmarks = ["~/projects/dotfiles/home.nix"];
+        sessionPersistence = true;
+        sessionDir = "~/nvim_sessions";
+        changeToVcsRoot = true;
+        changeCmd = "cd";
+        sessionSort = true;
+      };
       airline = {
         enable = true;
         theme = "onedark";
@@ -710,6 +730,15 @@ in {
         closeIfLastWindow = true;
       };
       which-key.enable = true;
+      spider = {
+        enable = true;
+        keymaps.motions = {
+          w = "w";
+          e = "e";
+          b = "b";
+          g = "ge";
+        };
+      };
       notify.enable = true;
       noice = {
         enable = true;
