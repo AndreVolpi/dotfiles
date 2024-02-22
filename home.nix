@@ -484,7 +484,6 @@ in {
       auto-session
       (fromGitHub "HEAD" "chrisgrieser/nvim-origami")
       (fromGitHub "HEAD" "anuvyklack/keymap-amend.nvim")
-      (fromGitHub "HEAD" "anuvyklack/fold-preview.nvim")
       (fromGitHub "HEAD" "elpiloto/telescope-vimwiki.nvim")
       (fromGitHub "HEAD" "drzel/vim-split-line")
       (fromGitHub "HEAD" "rutatang/compter.nvim")
@@ -546,12 +545,6 @@ in {
       	keepFoldsAcrossSessions = true,
       	pauseFoldsOnSearch = true,
         setupFoldKeymaps = true,
-      })
-
-      -- Fold-Preview
-      require('fold-preview').setup({
-        auto = 400,
-        border = "rounded",
       })
 
       -- Telescope extensions
