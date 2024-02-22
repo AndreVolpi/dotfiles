@@ -481,6 +481,7 @@ in {
       clever-f-vim
       vim-signify
       twilight-nvim
+      auto-session
       (fromGitHub "HEAD" "chrisgrieser/nvim-origami")
       (fromGitHub "HEAD" "anuvyklack/keymap-amend.nvim")
       (fromGitHub "HEAD" "anuvyklack/fold-preview.nvim")
@@ -669,6 +670,14 @@ in {
 
       -- Clever-f
       vim.g.clever_f_smart_case = true
+
+      -- Auto-session
+      require('auto-session').setup({
+        auto_session_root_dir = '~/nvim_sessions/',
+        auto_restore_enabled = false,
+        auto_session_use_git_branch = true
+      })
+      require("telescope").load_extension('session-lens')
     '';
 
     plugins = {
