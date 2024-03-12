@@ -111,7 +111,7 @@ in {
 
       # Terraform
       set -gx TERRAFORM_TOOLS_DIR $HOME/projects/liveservices/infrastructure/terraform-tools
-      set -gx TG_TF_REGISTRY_TOKEN "glpat-Ko9VLmExNvAdYHRzQPsR"
+      set -gx TG_TF_REGISTRY_TOKEN "GLAB_TOKEN"
 
       # Vi mode
       fish_vi_key_bindings
