@@ -78,15 +78,16 @@ in {
     erlfmt
 
     docker
-    nodePackages.dockerfile-language-server-nodejs
+    dockerfile-language-server-nodejs
 
     nixd
     nixfmt
 
     gopls
     sourcekit-lsp
-    nodePackages.yaml-language-server
-    nodePackages.vscode-json-languageserver
+    yaml-language-server
+    nodePackages.vscode-langservers-extracted
+    nodePackages.typescript-language-server
   ];
 
   home.file = { };
@@ -824,6 +825,7 @@ in {
           "terraformls"
           "sourcekit"
           "yamlls"
+          "tsserver"
         ];
         keymaps = {
           silent = true;
