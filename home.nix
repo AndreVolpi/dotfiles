@@ -668,7 +668,7 @@ in {
       -- Auto-session
       require('auto-session').setup({
         auto_session_root_dir = '~/nvim_sessions/',
-        auto_restore_enabled = false,
+        auto_restore_enabled = true,
         auto_session_use_git_branch = true
       })
       require("telescope").load_extension('session-lens')
