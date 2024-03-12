@@ -27,10 +27,10 @@ in {
     nixpkgs2211 = import <nixos-22.11> {
       config = { permittedInsecurePackages = [ "erlang-21.3.8.24" ]; };
     };
-    terraform_1_4_5 = pkgs.mkTerraform {
-      version = "1.4.5";
-      hash = "sha256-mnJ9d3UHAZxmz0i7PH0JF5gA3m3nJxM2NyAn0J0L6u8=";
-      vendorHash = "sha256-3ZQcWatJlQ6NVoPL/7cKQO6+YCSM3Ld77iLEQK3jBDE=";
+    terraform_1_4_6 = pkgs.mkTerraform {
+      version = "1.4.6";
+      hash = "sha256-V5sI8xmGASBZrPFtsnnfMEHapjz4BH3hvl0+DGjUSxQ=";
+      vendorHash = "sha256-OW/aS6aBoHABxfdjDxMJEdHwLuHHtPR2YVW4l0sHPjE=";
     };
     prevpkgs = import (builtins.fetchGit {
        name = "Packages";
@@ -60,7 +60,7 @@ in {
     aws-vault
     awscli2
 
-    terraform_1_4_5
+    terraform_1_4_6
     terraform-ls
     prevpkgs.terragrunt
 
