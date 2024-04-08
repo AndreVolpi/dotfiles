@@ -3,7 +3,6 @@
 let
   nixvim = import (builtins.fetchGit {
     url = "https://github.com/nix-community/nixvim";
-    ref = "nixos-23.05";
   });
   fromGitHub = ref: repo: pkgs.vimUtils.buildVimPlugin {
     pname = "${lib.strings.sanitizeDerivationName repo}";
@@ -19,26 +18,11 @@ in {
   home.username = builtins.getEnv "USER";
   home.homeDirectory = builtins.getEnv "HOME";
 
-  home.stateVersion = "23.05";
+  home.stateVersion = "24.05";
 
   nixpkgs.config.allowUnfree = true;
 
-  home.packages = let
-    nixpkgs2211 = import <nixos-22.11> {
-      config = { permittedInsecurePackages = [ "erlang-21.3.8.24" ]; };
-    };
-    terraform_1_4_6 = pkgs.mkTerraform {
-      version = "1.4.6";
-      hash = "sha256-V5sI8xmGASBZrPFtsnnfMEHapjz4BH3hvl0+DGjUSxQ=";
-      vendorHash = "sha256-OW/aS6aBoHABxfdjDxMJEdHwLuHHtPR2YVW4l0sHPjE=";
-    };
-    prevpkgs = import (builtins.fetchGit {
-       name = "Packages";
-       url = "https://github.com/NixOS/nixpkgs/";
-       ref = "refs/heads/nixos-23.05";
-       rev = "f21b6f77ac562732a4c9b8d1e5751c97853fe873";
-     }) {};
-  in with pkgs; [
+  home.packages = with pkgs; [
     gnumake
     gnupg
     binutils
@@ -60,28 +44,15 @@ in {
     aws-vault
     awscli2
 
-    terraform_1_4_6
-    terraform-ls
-    prevpkgs.terragrunt
-
-    python38
+    python3
     pyright
-    python311Packages.jedi-language-server
     black
-
-    lua5_2
-    lua-language-server
-
-    nixpkgs2211.erlangR21
-    nixpkgs2211.rebar3
-    erlang-ls
-    erlfmt
 
     docker
     dockerfile-language-server-nodejs
 
     nixd
-    nixfmt
+    nixfmt-classic
 
     gopls
     sourcekit-lsp
@@ -102,16 +73,10 @@ in {
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
 
-      set -gx LD_PRELOAD /lib/x86_64-linux-gnu/libnss_sss.so.2
-
       # AWS
       set -gx AWS_VAULT_BACKEND pass
       set -gx AWS_VAULT_PASS_PREFIX aws-vault
       set -gx VAULT_LDAP_USER andre.volpi
-
-      # Terraform
-      set -gx TERRAFORM_TOOLS_DIR $HOME/projects/liveservices/infrastructure/terraform-tools
-      set -gx TG_TF_REGISTRY_TOKEN "GLAB_TOKEN"
 
       # Vi mode
       fish_vi_key_bindings
@@ -346,12 +311,10 @@ in {
     enable = true;
     enableFishIntegration = true;
     enableSshSupport = true;
-    pinentryFlavor = "tty";
   };
 
   programs.eza = {
     enable = true;
-    enableAliases = true;
     git = true;
     icons = true;
   };
@@ -365,7 +328,7 @@ in {
 
     clipboard.register = "unnamedplus";
 
-    options = {
+    opts = {
       showcmd = true; # Show incomplete cmds down the bottom
       showmode = true; # Show current mode down the bottom
       number = true; # Show line numbers
@@ -404,37 +367,76 @@ in {
       shiftwidth = 2;
     };
 
-    maps = {
-      normalVisualOp."<C-h>" = "<C-w>h";
-      normalVisualOp."<C-j>" = "<C-w>j";
-      normalVisualOp."<C-k>" = "<C-w>k";
-      normalVisualOp."<C-l>" = "<C-w>l";
-      normalVisualOp."Y" = "y$";
-      normal."<A-,>" = {
+    keymaps = [
+      {
+        key = "<C-h>";
+        action = "<C-w>h";
+      }
+      {
+        key = "<C-j>";
+        action= "<C-w>j";
+      }
+      {
+        key = "<C-k>";
+        action = "<C-w>k";
+      }
+      {
+        key = "<C-l>";
+        action = "<C-w>l";
+      }
+      {
+        key = "Y";
+        action = "y$";
+      }
+      {
+        mode = "n";
+        key = "<A-,>";
         action = "<cmd>BufferPrevious<CR>";
-        silent = true;
-      };
-      normal."<A-.>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A-.>";
         action = "<cmd>BufferNext<CR>";
-        silent = true;
-      };
-      normal."<A-<>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A-<>";
         action = "<cmd>BufferMovePrevious<CR>";
-        silent = true;
-      };
-      normal."<A->>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A->>";
         action = "<cmd>BufferMoveNext<CR>";
-        silent = true;
-      };
-      normal."<A-0>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A-0>";
         action = "<cmd>BufferLast<CR>";
-        silent = true;
-      };
-      normal."<A-c>" = {
+        options = {
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A-c>";
         action = "<cmd>BufferClose<CR>";
-        silent = true;
-      };
-    };
+        options = {
+          silent = true;
+        };
+      }
+    ];
 
     autoCmd = [
       {
@@ -667,7 +669,7 @@ in {
 
       -- Auto-session
       require('auto-session').setup({
-        auto_session_root_dir = '~/nvim_sessions/',
+        auto_session_root_dir = '${builtins.getEnv "HOME"}/nvim_sessions/',
         auto_restore_enabled = true,
         auto_session_use_git_branch = true
       })
@@ -677,23 +679,21 @@ in {
     plugins = {
       startify = {
         enable = true;
-        bookmarks = ["~/projects/dotfiles/home.nix"];
-        sessionPersistence = true;
-        sessionDir = "~/nvim_sessions";
-        changeToVcsRoot = true;
-        changeCmd = "cd";
-        sessionSort = true;
+        settings = {
+          bookmarks = ["~/dotfiles/home.nix"];
+          session_persistence = true;
+          session_dir = "~/nvim_sessions";
+          change_to_vcs_root = true;
+          change_cmd = "cd";
+          session_sort = true;
+	};
       };
       airline = {
         enable = true;
-        theme = "onedark";
-        powerline = true;
-        extensions = {
-          hunks.enabled = true;
-          fzf.enabled = true;
-          nvimlsp.enabled = true;
-          vista.enabled = true;
-        };
+        settings = {
+          theme = "onedark";
+          powerline_fonts = true;
+	};
       };
       barbar = {
         enable = true;
@@ -759,12 +759,14 @@ in {
           "<C-f>b" = "current_buffer_fuzzy_find";
           "<leader>b" = "buffers";
         };
-        defaults = { display_path = "smart"; };
+        settings.defaults = { display_path = "smart"; };
         extensions = {
           fzf-native = {
             enable = true;
-            fuzzy = true;
-            caseMode = "smart_case";
+            settings = {
+              fuzzy = true;
+              case_mode = "smart_case";
+            };
           };
         };
       };
@@ -773,60 +775,44 @@ in {
         folding = true;
       };
       luasnip.enable = true;
-      nvim-cmp = {
+      cmp = {
         enable = true;
-        mapping = {
-          "<C-Space>" = "cmp.mapping.complete()";
-          "<C-e>" = "cmp.mapping.abort()";
-          "<CR>" = "cmp.mapping.confirm({ select = false })";
-          "<Tab>" = {
-            modes = [ "i" "s" ];
-            action = /* lua */ ''
-              function(fallback)
-                local luasnip = require("luasnip")
-                if cmp.visible() then
-                  cmp.select_next_item()
-                elseif luasnip.expandable() then
-                  luasnip.expand()
-                elseif luasnip.expand_or_jumpable() then
-                  luasnip.expand_or_jump()
-                else
-                  fallback()
-                end
-              end
-            '';
+	settings = {
+          mapping = {
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-e>" = "cmp.mapping.close()";
+            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+            "<CR>" = "cmp.mapping.confirm({ select = false })";
+            "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
           };
-        };
-        sources = [
-          { name = "nvim_lsp"; }
-          { name = "nvim-lsp-signature-help"; }
-          { name = "luasnip"; }
-          { name = "buffer"; }
-          { name = "fuzzy-path"; }
-          { name = "rg"; }
-          { name = "vimwiki-tags"; }
-          { name = "treesitter"; }
-          { name = "cmdline"; }
-          { name = "cmdline-history"; }
-        ];
-        snippet.expand = "luasnip";
+          sources = [
+            { name = "nvim_lsp"; }
+            { name = "nvim-lsp-signature-help"; }
+            { name = "luasnip"; }
+            { name = "buffer"; }
+            { name = "fuzzy-path"; }
+            { name = "rg"; }
+            { name = "vimwiki-tags"; }
+            { name = "treesitter"; }
+            { name = "cmdline"; }
+            { name = "cmdline-history"; }
+          ];
+          snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+	};
       };
       lsp = {
         enable = true;
-        enabledServers = [
-          "dockerls"
-          "erlangls"
-          "jsonls"
-          "jedi_language_server"
-          "gopls"
-          "lua_ls"
-          "nixd"
-          "pyright"
-          "terraformls"
-          "sourcekit"
-          "yamlls"
-          "tsserver"
-        ];
+        servers = {
+          dockerls.enable = true;
+          jsonls.enable = true;
+          nixd.enable = true;
+          pyright.enable = true;
+          sourcekit.enable = true;
+          yamlls.enable = true;
+          tsserver.enable = true;
+        };
         keymaps = {
           silent = true;
           diagnostic = {
@@ -861,11 +847,11 @@ in {
       fugitive.enable = true;
       gitsigns = {
         enable = true;
-        wordDiff = true;
-        currentLineBlame = true;
+        settings = {
+          word_diff = true;
+          current_line_blame = true;
 
-        onAttach = {
-          function = /* lua */ ''
+          on_attach = /* lua */ ''
             function(bufnr)
               vim.api.nvim_buf_set_keymap(bufnr,"n", "[g", "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>'", {noremap = true, silent = true, expr = true})
               vim.api.nvim_buf_set_keymap(bufnr,"n", "]g", "&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>'", {noremap = true, silent = true, expr = true})
