@@ -1,17 +1,17 @@
 { config, pkgs, lib, ... }:
 
 let
-  nixvim = import (builtins.fetchGit {
-    url = "https://github.com/nix-community/nixvim";
-  });
-  fromGitHub = ref: repo: pkgs.vimUtils.buildVimPlugin {
-    pname = "${lib.strings.sanitizeDerivationName repo}";
-    version = ref;
-    src = builtins.fetchGit {
-      url = "https://github.com/${repo}.git";
-      ref = ref;
+  nixvim = import
+    (builtins.fetchGit { url = "https://github.com/nix-community/nixvim"; });
+  fromGitHub = ref: repo:
+    pkgs.vimUtils.buildVimPlugin {
+      pname = "${lib.strings.sanitizeDerivationName repo}";
+      version = ref;
+      src = builtins.fetchGit {
+        url = "https://github.com/${repo}.git";
+        ref = ref;
+      };
     };
-  };
 in {
   imports = [ nixvim.homeManagerModules.nixvim ];
 
@@ -82,22 +82,21 @@ in {
       fish_vi_key_bindings
     '';
 
-    shellAbbrs = {
-      hms = "home-manager switch";
-    };
+    shellAbbrs = { hms = "home-manager switch"; };
 
     functions = {
       fuck = {
         description = "Correct your previous console command";
-        body = /* fish */ ''
-          set -l fucked_up_command $history[1]
-          env TF_SHELL=fish TF_ALIAS=fuck PYTHONIOENCODING=utf-8 thefuck $fucked_up_command THEFUCK_ARGUMENT_PLACEHOLDER $argv | read -l unfucked_command
-          if [ "$unfucked_command" != "" ]
-            eval $unfucked_command
-            builtin history delete --exact --case-sensitive -- $fucked_up_command
-            builtin history merge
-          end
-        '';
+        body = # fish
+          ''
+            set -l fucked_up_command $history[1]
+            env TF_SHELL=fish TF_ALIAS=fuck PYTHONIOENCODING=utf-8 thefuck $fucked_up_command THEFUCK_ARGUMENT_PLACEHOLDER $argv | read -l unfucked_command
+            if [ "$unfucked_command" != "" ]
+              eval $unfucked_command
+              builtin history delete --exact --case-sensitive -- $fucked_up_command
+              builtin history merge
+            end
+          '';
       };
     };
 
@@ -187,54 +186,58 @@ in {
       tmuxPlugins.onedark-theme
       {
         plugin = tmuxPlugins.better-mouse-mode;
-        extraConfig = /* fish */ ''
-          set -g @scroll-without-changing-pane "on"
-        '';
+        extraConfig = # fish
+          ''
+            set -g @scroll-without-changing-pane "on"
+          '';
       }
       {
         plugin = tmuxPlugins.pain-control;
-        extraConfig = /* fish */ ''
-          set -g @pane_resize "10"
-        '';
+        extraConfig = # fish
+          ''
+            set -g @pane_resize "10"
+          '';
       }
       {
         plugin = tmuxPlugins.continuum;
-        extraConfig = /* fish */ ''
-          set -g @continuum-restore 'on'
-        '';
+        extraConfig = # fish
+          ''
+            set -g @continuum-restore 'on'
+          '';
       }
     ];
 
-    extraConfig = /* fish */ ''
-      setw -g automatic-rename on   # rename window to reflect current program
-      set -g renumber-windows on    # renumber windows when a window is closed
-      set -g set-titles on          # set terminal title
-      set-option -g set-titles-string "#h ❐ #S ● #I #W"
+    extraConfig = # fish
+      ''
+        setw -g automatic-rename on   # rename window to reflect current program
+        set -g renumber-windows on    # renumber windows when a window is closed
+        set -g set-titles on          # set terminal title
+        set-option -g set-titles-string "#h ❐ #S ● #I #W"
 
-      bind R source-file '~/.config/tmux/tmux.conf'
+        bind R source-file '~/.config/tmux/tmux.conf'
 
-      set-option -g status on
-      set-option -g status-position top
+        set-option -g status on
+        set-option -g status-position top
 
-      bind Enter copy-mode # enter copy mode
+        bind Enter copy-mode # enter copy mode
 
-      bind -T copy-mode-vi v send -X begin-selection
-      bind -T copy-mode-vi C-v send -X rectangle-toggle
-      bind -T copy-mode-vi y send -X copy-selection-and-cancel
-      bind -T copy-mode-vi Escape send -X cancel
+        bind -T copy-mode-vi v send -X begin-selection
+        bind -T copy-mode-vi C-v send -X rectangle-toggle
+        bind -T copy-mode-vi y send -X copy-selection-and-cancel
+        bind -T copy-mode-vi Escape send -X cancel
 
-      set-option -g automatic-rename-format '#{s/.home.andre.volpi@ca.SEGA.Internal/~/:pane_current_path}'
+        set-option -g automatic-rename-format '#{s/.home.andre.volpi@ca.SEGA.Internal/~/:pane_current_path}'
 
-      # window navigation
-      unbind n
-      unbind p
-      bind -r C-h previous-window # select previous window
-      bind -r C-l next-window     # select next window
-      bind Tab last-window        # move to last active window
+        # window navigation
+        unbind n
+        unbind p
+        bind -r C-h previous-window # select previous window
+        bind -r C-l next-window     # select next window
+        bind Tab last-window        # move to last active window
 
-      # toggle mouse
-      bind m run "cut -c3- '#{TMUX_CONF}' | sh -s _toggle_mouse"
-    '';
+        # toggle mouse
+        bind m run "cut -c3- '#{TMUX_CONF}' | sh -s _toggle_mouse"
+      '';
   };
 
   programs.fzf = {
@@ -289,10 +292,10 @@ in {
       core = { editor = "nvim"; };
       url = {
         "https://oauth2:GITLAB_TOKEN@cahrh-gitlab.creative-assembly.com" = {
-          insteadOf = https://cahrh-gitlab.creative-assembly.com;
+          insteadOf = "https://cahrh-gitlab.creative-assembly.com";
         };
         "https://oauth2:GITHUB_TOKEN@github.com" = {
-          insteadOf = https://github.com;
+          insteadOf = "https://github.com";
         };
       };
     };
@@ -374,7 +377,7 @@ in {
       }
       {
         key = "<C-j>";
-        action= "<C-w>j";
+        action = "<C-w>j";
       }
       {
         key = "<C-k>";
@@ -392,49 +395,37 @@ in {
         mode = "n";
         key = "<A-,>";
         action = "<cmd>BufferPrevious<CR>";
-        options = {
-          silent = true;
-        };
+        options = { silent = true; };
       }
       {
         mode = "n";
         key = "<A-.>";
         action = "<cmd>BufferNext<CR>";
-        options = {
-          silent = true;
-        };
+        options = { silent = true; };
       }
       {
         mode = "n";
         key = "<A-<>";
         action = "<cmd>BufferMovePrevious<CR>";
-        options = {
-          silent = true;
-        };
+        options = { silent = true; };
       }
       {
         mode = "n";
         key = "<A->>";
         action = "<cmd>BufferMoveNext<CR>";
-        options = {
-          silent = true;
-        };
+        options = { silent = true; };
       }
       {
         mode = "n";
         key = "<A-0>";
         action = "<cmd>BufferLast<CR>";
-        options = {
-          silent = true;
-        };
+        options = { silent = true; };
       }
       {
         mode = "n";
         key = "<A-c>";
         action = "<cmd>BufferClose<CR>";
-        options = {
-          silent = true;
-        };
+        options = { silent = true; };
       }
     ];
 
@@ -495,205 +486,206 @@ in {
       (fromGitHub "HEAD" "yuki-yano/zero.nvim")
     ];
 
-    extraConfigLua = /* lua */ ''
-      vim.o.foldenable = false
+    extraConfigLua = # lua
+      ''
+        vim.o.foldenable = false
 
-      vim.api.nvim_create_autocmd('TextYankPost', {
-        group = vim.api.nvim_create_augroup('highlight_yank', {}),
-        desc = 'Hightlight selection on yank',
-        pattern = '*',
-        callback = function()
-          vim.highlight.on_yank { higroup = 'IncSearch', timeout = 500 }
-        end,
-      })
+        vim.api.nvim_create_autocmd('TextYankPost', {
+          group = vim.api.nvim_create_augroup('highlight_yank', {}),
+          desc = 'Hightlight selection on yank',
+          pattern = '*',
+          callback = function()
+            vim.highlight.on_yank { higroup = 'IncSearch', timeout = 500 }
+          end,
+        })
 
-      -- Rainbow
-      vim.g.rainbow_active = "1"
+        -- Rainbow
+        vim.g.rainbow_active = "1"
 
-      -- Fugitive
-      vim.g.fugitive_gitlab_domains = {"https://cahrh-gitlab.creative-assembly.com"}
+        -- Fugitive
+        vim.g.fugitive_gitlab_domains = {"https://cahrh-gitlab.creative-assembly.com"}
 
-      -- Vista
-      vim.g.vista_default_executive = "nvim_lsp"
-      vim.api.nvim_set_keymap("n", "<leader>v", "<cmd>Vista!!<CR>", {silent = true})
+        -- Vista
+        vim.g.vista_default_executive = "nvim_lsp"
+        vim.api.nvim_set_keymap("n", "<leader>v", "<cmd>Vista!!<CR>", {silent = true})
 
-      -- VimWiki
-      vim.g.vimwiki_list = {{ path = '~/notes/', synax = 'markdown', ext = '.md' }}
+        -- VimWiki
+        vim.g.vimwiki_list = {{ path = '~/notes/', synax = 'markdown', ext = '.md' }}
 
-      -- Scrollview
-      vim.g.scrollview_excluded_filetypes = {"nerdtree", "chadtree", "vista"}
-      vim.g.scrollview_current_only = true
-      vim.g.scrollview_signs_on_startup = {"all"}
+        -- Scrollview
+        vim.g.scrollview_excluded_filetypes = {"nerdtree", "chadtree", "vista"}
+        vim.g.scrollview_current_only = true
+        vim.g.scrollview_signs_on_startup = {"all"}
 
-      -- Neo-tree
-      vim.api.nvim_set_keymap("n", "<leader>pf", "<cmd>Neotree toggle reveal focus float<CR>", {silent = true})
-      vim.api.nvim_set_keymap("n", "<leader>pb", "<cmd>Neotree toggle reveal focus float buffers<CR>", {silent = true})
-      vim.api.nvim_set_keymap("n", "<leader>pg", "<cmd>Neotree toggle reveal focus float git_status<CR>", {silent = true})
+        -- Neo-tree
+        vim.api.nvim_set_keymap("n", "<leader>pf", "<cmd>Neotree toggle reveal focus float<CR>", {silent = true})
+        vim.api.nvim_set_keymap("n", "<leader>pb", "<cmd>Neotree toggle reveal focus float buffers<CR>", {silent = true})
+        vim.api.nvim_set_keymap("n", "<leader>pg", "<cmd>Neotree toggle reveal focus float git_status<CR>", {silent = true})
 
-      -- Neoformat
-      vim.g.neoformat_enabled_erlang = { "erlfmt" }
-      vim.g.neoformat_enabled_python = { "black" }
-      vim.g.neoformat_enabled_nix = { "nixfmt" }
+        -- Neoformat
+        vim.g.neoformat_enabled_erlang = { "erlfmt" }
+        vim.g.neoformat_enabled_python = { "black" }
+        vim.g.neoformat_enabled_nix = { "nixfmt" }
 
-      -- HlChunk
-      require('hlchunk').setup({
-        blank = {
-          enable = false,
-        }
-      })
-
-      -- Nvim-Origami
-      vim.o.startofline = true
-      require("origami").setup ({
-      	keepFoldsAcrossSessions = true,
-      	pauseFoldsOnSearch = true,
-        setupFoldKeymaps = true,
-      })
-
-      -- Telescope extensions
-      require('telescope').load_extension('vimwiki')
-
-      -- Vim-Split-Line
-      vim.api.nvim_set_keymap("n", "S", "<cmd>SplitLine<CR>", {noremap = true})
-
-      -- Compter
-      require("compter").setup({
-        templates = {
-          -- for lowercase alphabet
-          {
-            pattern = [[\l]],
-            priority = 0,
-            increase = function(content)
-              local ansiCode = string.byte(content) + 1
-              if ansiCode > string.byte("z") then
-                ansiCode = string.byte("a")
-              end
-              local char = string.char(ansiCode)
-              return char, true
-            end,
-            decrease = function(content)
-              local ansiCode = string.byte(content) - 1
-              if ansiCode < string.byte("a") then
-                ansiCode = string.byte("z")
-              end
-              local char = string.char(ansiCode)
-              return char, true
-            end,
-          },
-          -- for uppercase alphabet
-          {
-            pattern = [[\u]],
-            priority = 0,
-            increase = function(content)
-              local ansiCode = string.byte(content) + 1
-              if ansiCode > string.byte("Z") then
-                ansiCode = string.byte("A")
-              end
-              local char = string.char(ansiCode)
-              return char, true
-            end,
-            decrease = function(content)
-              local ansiCode = string.byte(content) - 1
-              if ansiCode < string.byte("A") then
-                ansiCode = string.byte("Z")
-              end
-              local char = string.char(ansiCode)
-              return char, true
-            end,
-          },
-          -- for date format: dd/mm/YYYY
-          {
-            pattern = [[\d\{2}/\d\{2}/\d\{4}]],
-            priority = 100,
-            increase = function(content)
-              local ts = vim.fn.strptime("%d/%m/%Y", content)
-              if ts == 0 then
-                return content, false
-              else
-                ts = ts + 24 * 60 * 60
-                return vim.fn.strftime("%d/%m/%Y", ts), true
-              end
-            end,
-            decrease = function(content)
-              local ts = vim.fn.strptime("%d/%m/%Y", content)
-              if ts == 0 then
-                return content, false
-              else
-                ts = ts - 24 * 60 * 60
-                return vim.fn.strftime("%d/%m/%Y", ts), true
-              end
-            end,
-          },
-          -- for boolean
-          {
-            pattern = [[\<\(true\|false\|TRUE\|FALSE\|True\|False\)\>]],
-            priority = 100,
-            increase = function(content)
-              local switch = {
-                ["true"] = "false",
-                ["false"] = "true",
-                ["True"] = "False",
-                ["False"] = "True",
-                ["TRUE"] = "FALSE",
-                ["FALSE"] = "TRUE",
-              }
-              return switch[content], true
-            end,
-            decrease = function(content)
-              local switch = {
-                ["true"] = "false",
-                ["false"] = "true",
-                ["True"] = "False",
-                ["False"] = "True",
-                ["TRUE"] = "FALSE",
-                ["FALSE"] = "TRUE",
-              }
-              return switch[content], true
-            end,
+        -- HlChunk
+        require('hlchunk').setup({
+          blank = {
+            enable = false,
           }
-        },
-        fallback = true 
-      })
+        })
 
-      -- Zero
-      require('zero').setup()
+        -- Nvim-Origami
+        vim.o.startofline = true
+        require("origami").setup ({
+        	keepFoldsAcrossSessions = true,
+        	pauseFoldsOnSearch = true,
+          setupFoldKeymaps = true,
+        })
 
-      -- Text-Case
-      require('textcase').setup({})
-      require('telescope').load_extension('textcase')
-      vim.api.nvim_set_keymap('n', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = "Telescope text-case-nvim" })
-      vim.api.nvim_set_keymap('v', 'ga.', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope text-case-nvim" })
+        -- Telescope extensions
+        require('telescope').load_extension('vimwiki')
 
-      -- Clever-f
-      vim.g.clever_f_smart_case = true
+        -- Vim-Split-Line
+        vim.api.nvim_set_keymap("n", "S", "<cmd>SplitLine<CR>", {noremap = true})
 
-      -- Auto-session
-      require('auto-session').setup({
-        auto_session_root_dir = '${builtins.getEnv "HOME"}/nvim_sessions/',
-        auto_restore_enabled = true,
-        auto_session_use_git_branch = true
-      })
-      require("telescope").load_extension('session-lens')
-    '';
+        -- Compter
+        require("compter").setup({
+          templates = {
+            -- for lowercase alphabet
+            {
+              pattern = [[\l]],
+              priority = 0,
+              increase = function(content)
+                local ansiCode = string.byte(content) + 1
+                if ansiCode > string.byte("z") then
+                  ansiCode = string.byte("a")
+                end
+                local char = string.char(ansiCode)
+                return char, true
+              end,
+              decrease = function(content)
+                local ansiCode = string.byte(content) - 1
+                if ansiCode < string.byte("a") then
+                  ansiCode = string.byte("z")
+                end
+                local char = string.char(ansiCode)
+                return char, true
+              end,
+            },
+            -- for uppercase alphabet
+            {
+              pattern = [[\u]],
+              priority = 0,
+              increase = function(content)
+                local ansiCode = string.byte(content) + 1
+                if ansiCode > string.byte("Z") then
+                  ansiCode = string.byte("A")
+                end
+                local char = string.char(ansiCode)
+                return char, true
+              end,
+              decrease = function(content)
+                local ansiCode = string.byte(content) - 1
+                if ansiCode < string.byte("A") then
+                  ansiCode = string.byte("Z")
+                end
+                local char = string.char(ansiCode)
+                return char, true
+              end,
+            },
+            -- for date format: dd/mm/YYYY
+            {
+              pattern = [[\d\{2}/\d\{2}/\d\{4}]],
+              priority = 100,
+              increase = function(content)
+                local ts = vim.fn.strptime("%d/%m/%Y", content)
+                if ts == 0 then
+                  return content, false
+                else
+                  ts = ts + 24 * 60 * 60
+                  return vim.fn.strftime("%d/%m/%Y", ts), true
+                end
+              end,
+              decrease = function(content)
+                local ts = vim.fn.strptime("%d/%m/%Y", content)
+                if ts == 0 then
+                  return content, false
+                else
+                  ts = ts - 24 * 60 * 60
+                  return vim.fn.strftime("%d/%m/%Y", ts), true
+                end
+              end,
+            },
+            -- for boolean
+            {
+              pattern = [[\<\(true\|false\|TRUE\|FALSE\|True\|False\)\>]],
+              priority = 100,
+              increase = function(content)
+                local switch = {
+                  ["true"] = "false",
+                  ["false"] = "true",
+                  ["True"] = "False",
+                  ["False"] = "True",
+                  ["TRUE"] = "FALSE",
+                  ["FALSE"] = "TRUE",
+                }
+                return switch[content], true
+              end,
+              decrease = function(content)
+                local switch = {
+                  ["true"] = "false",
+                  ["false"] = "true",
+                  ["True"] = "False",
+                  ["False"] = "True",
+                  ["TRUE"] = "FALSE",
+                  ["FALSE"] = "TRUE",
+                }
+                return switch[content], true
+              end,
+            }
+          },
+          fallback = true 
+        })
+
+        -- Zero
+        require('zero').setup()
+
+        -- Text-Case
+        require('textcase').setup({})
+        require('telescope').load_extension('textcase')
+        vim.api.nvim_set_keymap('n', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = "Telescope text-case-nvim" })
+        vim.api.nvim_set_keymap('v', 'ga.', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope text-case-nvim" })
+
+        -- Clever-f
+        vim.g.clever_f_smart_case = true
+
+        -- Auto-session
+        require('auto-session').setup({
+          auto_session_root_dir = '${builtins.getEnv "HOME"}/nvim_sessions/',
+          auto_restore_enabled = true,
+          auto_session_use_git_branch = true
+        })
+        require("telescope").load_extension('session-lens')
+      '';
 
     plugins = {
       startify = {
         enable = true;
         settings = {
-          bookmarks = ["~/dotfiles/home.nix"];
+          bookmarks = [ "~/dotfiles/home.nix" ];
           session_persistence = true;
           session_dir = "~/nvim_sessions";
           change_to_vcs_root = true;
           change_cmd = "cd";
           session_sort = true;
-	};
+        };
       };
       airline = {
         enable = true;
         settings = {
           theme = "onedark";
           powerline_fonts = true;
-	};
+        };
       };
       barbar = {
         enable = true;
@@ -746,10 +738,10 @@ in {
       noice = {
         enable = true;
         lsp.override = {
-            "vim.lsp.util.convert_input_to_markdown_lines" = true;
-            "vim.lsp.util.stylize_markdown" = true;
-            "cmp.entry.get_documentation" = true;
-          };
+          "vim.lsp.util.convert_input_to_markdown_lines" = true;
+          "vim.lsp.util.stylize_markdown" = true;
+          "cmp.entry.get_documentation" = true;
+        };
       };
       telescope = {
         enable = true;
@@ -777,14 +769,15 @@ in {
       luasnip.enable = true;
       cmp = {
         enable = true;
-	settings = {
+        settings = {
           mapping = {
             "<C-Space>" = "cmp.mapping.complete()";
             "<C-d>" = "cmp.mapping.scroll_docs(-4)";
             "<C-e>" = "cmp.mapping.close()";
             "<C-f>" = "cmp.mapping.scroll_docs(4)";
             "<CR>" = "cmp.mapping.confirm({ select = false })";
-            "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<S-Tab>" =
+              "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
             "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
           };
           sources = [
@@ -799,8 +792,9 @@ in {
             { name = "cmdline"; }
             { name = "cmdline-history"; }
           ];
-          snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
-	};
+          snippet.expand =
+            "function(args) require('luasnip').lsp_expand(args.body) end";
+        };
       };
       lsp = {
         enable = true;
@@ -832,15 +826,17 @@ in {
             "<leader>f" = "format";
           };
         };
-        onAttach = /* lua */  ''
-          vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
-        '';
-        postConfig = /* lua */ ''
-          vim.api.nvim_set_keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", {noremap = true})
-          vim.api.nvim_set_keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", {noremap = true})
-          vim.api.nvim_set_keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", {noremap = true})
-          vim.api.nvim_set_keymap("n", "<leader>D", "<cmd>Telescope lsp_type_definitions<CR>", {noremap = true})
-        '';
+        onAttach = # lua
+          ''
+            vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+          '';
+        postConfig = # lua
+          ''
+            vim.api.nvim_set_keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", {noremap = true})
+            vim.api.nvim_set_keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", {noremap = true})
+            vim.api.nvim_set_keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", {noremap = true})
+            vim.api.nvim_set_keymap("n", "<leader>D", "<cmd>Telescope lsp_type_definitions<CR>", {noremap = true})
+          '';
       };
       commentary.enable = true;
       surround.enable = true;
@@ -851,29 +847,30 @@ in {
           word_diff = true;
           current_line_blame = true;
 
-          on_attach = /* lua */ ''
-            function(bufnr)
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "[g", "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>'", {noremap = true, silent = true, expr = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "]g", "&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>'", {noremap = true, silent = true, expr = true})
+          on_attach = # lua
+            ''
+              function(bufnr)
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "[g", "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>'", {noremap = true, silent = true, expr = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "]g", "&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>'", {noremap = true, silent = true, expr = true})
 
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hs", "<cmd>Gitsigns stage_hunk<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"v", "<leader>hs", "<cmd>Gitsigns stage_hunk<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hr", "<cmd>Gitsigns reset_hunk<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"v", "<leader>hr", "<cmd>Gitsigns reset_hunk<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hS", "<cmd>Gitsigns stage_buffer<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hu", "<cmd>Gitsigns undo_stage_hunk<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hR", "<cmd>Gitsigns reset_buffer<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hb", "<cmd>lua require'gitsigns'.blame_line{full=true}<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>tb", "<cmd>Gitsigns toggle_current_line_blame<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hd", "<cmd>Gitsigns diffthis<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hD", "<cmd>lua require'gitsigns'.diffthis('~')<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hs", "<cmd>Gitsigns stage_hunk<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"v", "<leader>hs", "<cmd>Gitsigns stage_hunk<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hr", "<cmd>Gitsigns reset_hunk<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"v", "<leader>hr", "<cmd>Gitsigns reset_hunk<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hS", "<cmd>Gitsigns stage_buffer<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hu", "<cmd>Gitsigns undo_stage_hunk<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hR", "<cmd>Gitsigns reset_buffer<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hb", "<cmd>lua require'gitsigns'.blame_line{full=true}<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>tb", "<cmd>Gitsigns toggle_current_line_blame<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hd", "<cmd>Gitsigns diffthis<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>hD", "<cmd>lua require'gitsigns'.diffthis('~')<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>", {noremap = true, silent = true})
 
-              vim.api.nvim_buf_set_keymap(bufnr,"o", "ih", "<cmd><C-U>Gitsigns select_hunk<CR>", {noremap = true, silent = true})
-              vim.api.nvim_buf_set_keymap(bufnr,"x", "ih", "<cmd><C-U>Gitsigns select_hunk<CR>", {noremap = true, silent = true})
-            end
-          '';
+                vim.api.nvim_buf_set_keymap(bufnr,"o", "ih", "<cmd><C-U>Gitsigns select_hunk<CR>", {noremap = true, silent = true})
+                vim.api.nvim_buf_set_keymap(bufnr,"x", "ih", "<cmd><C-U>Gitsigns select_hunk<CR>", {noremap = true, silent = true})
+              end
+            '';
         };
       };
     };
