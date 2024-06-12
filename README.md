@@ -35,16 +35,15 @@ To use it with other systems, code changes are likely to be needed. Feel free to
 
 Below is the list of installed and configured packages:
 
+- [Nix](https://nix.dev)
+- [direnv](https://nix.dev/guides/recipes/direnv.html)
+- [Starship](https://starship.rs/)
 - [Fish](https://fishshell.com)
 - [Tmux](https://github.com/tmux/tmux)
 - [git](https://git-scm.com/)
   - [gita](https://github.com/nosarthur/gita)
-- [exa](https://the.exa.website)
+- [eza](https://github.com/eza-community/eza)
 - [FZF](https://github.com/junegunn/fzf)
 - [Forgit](https://github.com/wfxr/forgit)
 - [NeoVim](http://neovim.io/)
   - Along with many plugins.
-- [Erlang](https://www.erlang.org)
-  - [Rebar3](https://github.com/erlang/rebar3)
-- [Terraform](https://www.terraform.io/)
-- [Python3](https://www.python.org/)
