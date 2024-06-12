@@ -68,6 +68,14 @@ in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true; # see note on other shells below
+    nix-direnv.enable = true;
+  };
+
+  programs.bash.enable = true;
+
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
@@ -80,6 +88,9 @@ in {
 
       # Vi mode
       fish_vi_key_bindings
+
+      # Enable Nix's direnv
+      direnv hook fish | source
     '';
 
     shellAbbrs = { hms = "home-manager switch"; };
@@ -689,20 +700,20 @@ in {
       };
       barbar = {
         enable = true;
-        autoHide = false;
-        clickable = true;
-        sidebarFiletypes = {
-          nerdtree = true;
-          chadtree = true;
-          vista = true;
-        };
-        icons = {
-          filetype = {
-            enable = true;
-            customColors = false;
+        settings = {
+          autoHide = false;
+          clickable = true;
+          sidebarFiletypes = {
+            nerdtree = true;
+            chadtree = true;
+            vista = true;
           };
-        };
-        extraOptions = {
+          icons = {
+            filetype = {
+              enable = true;
+              customColors = false;
+            };
+          };
           gitsigns = {
             added = {
               enabled = true;
