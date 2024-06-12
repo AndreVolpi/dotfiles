@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 let
   nixvim = import
@@ -476,7 +476,6 @@ in {
       vimwiki
       nvim-scrollview
       friendly-snippets
-      neoformat
       vim-numbertoggle
       vim-expand-region
       vim-visual-increment
@@ -532,11 +531,6 @@ in {
         vim.api.nvim_set_keymap("n", "<leader>pf", "<cmd>Neotree toggle reveal focus float<CR>", {silent = true})
         vim.api.nvim_set_keymap("n", "<leader>pb", "<cmd>Neotree toggle reveal focus float buffers<CR>", {silent = true})
         vim.api.nvim_set_keymap("n", "<leader>pg", "<cmd>Neotree toggle reveal focus float git_status<CR>", {silent = true})
-
-        -- Neoformat
-        vim.g.neoformat_enabled_erlang = { "erlfmt" }
-        vim.g.neoformat_enabled_python = { "black" }
-        vim.g.neoformat_enabled_nix = { "nixfmt" }
 
         -- HlChunk
         require('hlchunk').setup({
