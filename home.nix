@@ -54,7 +54,6 @@ in {
     nixd
     nixfmt-classic
 
-    gopls
     sourcekit-lsp
     yaml-language-server
     nodePackages.vscode-langservers-extracted
@@ -454,7 +453,7 @@ in {
       {
         event = [ "FileType" ];
         pattern = [ "go" ];
-        command = "setl ts=4 sts=4 sw=4 noet commentstring=// %s";
+        command = "setl ts=4 sts=4 sw=4 noet commentstring=//%s";
       }
       {
         event = [ "FileType" ];
@@ -808,6 +807,7 @@ in {
           jsonls.enable = true;
           nixd.enable = true;
           pyright.enable = true;
+          gopls.enable = true;
           sourcekit.enable = true;
           yamlls.enable = true;
           tsserver.enable = true;
