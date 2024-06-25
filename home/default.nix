@@ -11,8 +11,8 @@
     ./nixvim.nix
   ];
 
-  home.username = builtins.getEnv "USER";
-  home.homeDirectory = builtins.getEnv "HOME";
+  home.username = "kurumas";
+  home.homeDirectory = "/home/kurumas";
 
   home.stateVersion = "24.05";
 

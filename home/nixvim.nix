@@ -1,13 +1,14 @@
 { pkgs, lib, ... }:
 
 let
-  fromGitHub = ref: repo:
+  fromGitHub = ref: rev: repo:
     pkgs.vimUtils.buildVimPlugin {
       pname = "${lib.strings.sanitizeDerivationName repo}";
       version = ref;
       src = builtins.fetchGit {
         url = "https://github.com/${repo}.git";
         ref = ref;
+        rev = rev;
       };
     };
 in
@@ -185,14 +186,14 @@ in
       vim-signify
       twilight-nvim
       auto-session
-      (fromGitHub "HEAD" "chrisgrieser/nvim-origami")
-      (fromGitHub "HEAD" "anuvyklack/keymap-amend.nvim")
-      (fromGitHub "HEAD" "elpiloto/telescope-vimwiki.nvim")
-      (fromGitHub "HEAD" "drzel/vim-split-line")
-      (fromGitHub "HEAD" "rutatang/compter.nvim")
-      (fromGitHub "HEAD" "shellRaining/hlchunk.nvim")
-      (fromGitHub "HEAD" "calops/hmts.nvim")
-      (fromGitHub "HEAD" "yuki-yano/zero.nvim")
+      (fromGitHub "HEAD" "c824f470e0c177707822c37b13087ab1dd7ddf91" "chrisgrieser/nvim-origami")
+      (fromGitHub "HEAD" "b8bf9d820878d5497fdd11d6de55dea82872d98e" "anuvyklack/keymap-amend.nvim")
+      (fromGitHub "HEAD" "13a83b6107da17af9eb8a1d8e0fe49e1004dfeb4" "elpiloto/telescope-vimwiki.nvim")
+      (fromGitHub "HEAD" "9e26b7ce134a4a9a47fc72b9838de70907d4957a" "drzel/vim-split-line")
+      (fromGitHub "HEAD" "954fa6e860cb0019fb263a8defae0675fcfdf9e8" "rutatang/compter.nvim")
+      (fromGitHub "HEAD" "930fe6262f87d66ca0c85dada3bb7c2a8cb6ec3e" "shellRaining/hlchunk.nvim")
+      (fromGitHub "HEAD" "19a91816c123173a4551a6a04f2882338f20db1d" "calops/hmts.nvim")
+      (fromGitHub "HEAD" "ec0b1adcb3a34fad96c7a04bf0130db716f66e8c" "yuki-yano/zero.nvim")
     ];
 
     extraConfigLua = # lua
@@ -365,7 +366,7 @@ in
 
         -- Auto-session
         require('auto-session').setup({
-          auto_session_root_dir = '${builtins.getEnv "HOME"}/nvim_sessions/',
+          auto_session_root_dir = '~/nvim_sessions/',
           auto_restore_enabled = true,
           auto_session_use_git_branch = true
         })
@@ -387,7 +388,6 @@ in
       airline = {
         enable = true;
         settings = {
-          theme = "onedark";
           powerline_fonts = true;
         };
       };
