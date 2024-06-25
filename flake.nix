@@ -14,7 +14,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, nixvim, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -22,7 +22,10 @@
       homeConfigurations.kurumas = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
-        modules = [ ./home ];
+        modules = [
+          ./home
+          nixvim.homeManagerModules.nixvim
+        ];
       };
     };
 }

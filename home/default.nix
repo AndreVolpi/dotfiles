@@ -8,6 +8,7 @@
     ./git.nix
     ./starship.nix
     ./tmux.nix
+    ./nixvim.nix
   ];
 
   home.username = builtins.getEnv "USER";
