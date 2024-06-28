@@ -29,6 +29,7 @@ let
   nPlugins = with pkgs.vimPlugins; [
     auto-session
     clever-f-vim
+    codewindow-nvim
     context-vim
     hmts-nvim
     rainbow
@@ -85,6 +86,11 @@ in
 
       -- Clever-f
       vim.g.clever_f_smart_case = true
+
+      -- Codewindow
+      codewindow = require('codewindow')
+      codewindow.setup()
+      codewindow.apply_default_keybinds()
 
       -- Rainbow
       vim.g.rainbow_active = '1'
