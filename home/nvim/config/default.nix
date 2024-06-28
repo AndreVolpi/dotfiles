@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 let
   # ePlugins are the plugins that are not available in nixpkgs/nixvim/NixNeovimPlugins
   fromGitHub = import ../functions/fromGitHub.nix;
@@ -27,6 +27,7 @@ let
 
   # nPlugins are normally available in nixpkgs
   nPlugins = with pkgs.vimPlugins; [
+    auto-save-nvim
     auto-session
     barbecue-nvim
     clever-f-vim
@@ -76,6 +77,9 @@ in
 
     extraLuaConfig = /* lua */ ''
       vim.o.foldenable = false
+
+      -- Auto-Save
+      require("auto-save").setup {}
 
       -- Auto-session
       require('auto-session').setup({
