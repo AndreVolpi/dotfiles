@@ -28,6 +28,7 @@ let
   # nPlugins are normally available in nixpkgs
   nPlugins = with pkgs.vimPlugins; [
     auto-session
+    barbecue-nvim
     clever-f-vim
     codewindow-nvim
     context-vim
@@ -83,6 +84,9 @@ in
         auto_session_use_git_branch = true
       })
       require('telescope').load_extension('session-lens')
+
+      -- Barbecue
+      require("barbecue").setup()
 
       -- Clever-f
       vim.g.clever_f_smart_case = true
