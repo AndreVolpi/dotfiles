@@ -4,12 +4,14 @@ let
   fromGitHub = import ../functions/fromGitHub.nix;
   ePlugins = [
     (fromGitHub {
+      inherit pkgs;
       owner = "drzel";
       repo = "vim-split-line";
       rev = "9e26b7ce134a4a9a47fc72b9838de70907d4957a";
       sha256 = "jRMnxPBqMyaqMay7zgAKfoFrbKStBsq3HLdnZCh8iG0=";
     })
     (fromGitHub {
+      inherit pkgs;
       owner = "yuki-yano";
       repo = "zero.nvim";
       rev = "ec0b1adcb3a34fad96c7a04bf0130db716f66e8c";

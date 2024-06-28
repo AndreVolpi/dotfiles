@@ -1,8 +1,4 @@
-{ owner, repo, rev ? "HEAD", sha256 ? "" }:
-
-let
-  pkgs = import <nixpkgs> { };
-in
+{ pkgs, owner, repo, rev ? "HEAD", sha256 ? "" }:
 
 pkgs.vimUtils.buildVimPlugin {
   name = "${pkgs.lib.strings.sanitizeDerivationName repo}";

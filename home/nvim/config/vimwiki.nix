@@ -7,6 +7,7 @@ in
     plugins = [
       pkgs.vimPlugins.vimwiki
       (fromGitHub {
+        inherit pkgs;
         owner = "ElPiloto";
         repo = "telescope-vimwiki.nvim";
         rev = "13a83b6107da17af9eb8a1d8e0fe49e1004dfeb4";
