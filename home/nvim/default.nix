@@ -15,6 +15,8 @@
     ];
 
     extraLuaConfig = /* lua */ ''
+      vim.opt.exrc = true -- Enables local .nvimrc
+
       onedark = require('onedark')
       onedark.setup({
         style = 'darker'
