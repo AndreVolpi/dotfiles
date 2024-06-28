@@ -22,7 +22,7 @@
       direnv hook fish | source
     '';
 
-    shellAbbrs = { hms = "home-manager switch"; };
+    shellAbbrs = { hms = "home-manager switch --flake ~/dotfiles"; };
 
     functions = {
       fuck = {
