@@ -7,6 +7,7 @@
     ./cmp.nix
     ./commentary.nix
     ./compter.nix
+    ./fidget.nix
     ./fugitive.nix
     ./general.nix
     ./gitsigns.nix
@@ -14,7 +15,6 @@
     ./lsp.nix
     ./neo-tree.nix
     ./noice.nix
-    ./notify.nix
     ./spider.nix
     ./startify.nix
     ./surround.nix

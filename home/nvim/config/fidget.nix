@@ -1,12 +1,11 @@
 { pkgs, ... }: {
   programs.neovim = {
     plugins = with pkgs.vimPlugins; [
-      nvim-notify
+      fidget-nvim
     ];
 
     extraLuaConfig = /* lua */ ''
-      vim.notify = require('notify')
-      require('notify').setup({ ['level'] = vim.log.levels.INFO })
+      require("fidget").setup {}
     '';
   };
 }
