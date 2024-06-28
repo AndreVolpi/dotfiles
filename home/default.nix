@@ -6,9 +6,9 @@
     ./fish.nix
     ./fzf.nix
     ./git.nix
+    ./nvim
     ./starship.nix
     ./tmux.nix
-    ./nixvim.nix
   ];
 
   home.username = "kurumas";

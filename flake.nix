@@ -8,24 +8,20 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-        url = "github:nix-community/nixvim/nixos-24.05";
-        inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }:
+  outputs = { nixpkgs, home-manager, nixneovimplugins, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
+      pkgs = nixpkgs.legacyPackages.${system}.extend
+        nixneovimplugins.overlays.default;
+    in
+    {
       homeConfigurations.kurumas = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
-        modules = [
-          ./home
-          nixvim.homeManagerModules.nixvim
-        ];
+        modules = [ ./home ];
       };
     };
 }
