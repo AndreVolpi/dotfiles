@@ -9,23 +9,16 @@ These dotfiles are managed with [Nix](https://nixos.org/) and [Home Manager](htt
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
-- Installing Home Manager
-```sh
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-nix-channel --update
-nix-shell '<home-manager>' -A install
-```
-
 - Installing these Dotfiles
 ```sh
 git clone https://github.com/AndreVolpi/dotfiles.git ~/dotfiles
-ln -fs ~/dotfiles/home.nix ~/.config/home-manager/home.nix
 ```
 
 - Activate the environment
 ```sh
-home-manager switch
+nix run home-manager/release-24.05 -- init --switch ~/dotfiles
 ```
+*This may fail due to .bashrc and .profile, follow the instructions on the error message*
 
 ## Details
 
