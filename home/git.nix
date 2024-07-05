@@ -5,7 +5,7 @@
   programs.git = {
     enable = true;
     userEmail = "devolpi@gmail.com";
-    userName = "Andre Volpi";
+    userName = "André Volpi";
 
     aliases = {
       st = "status -sb";
@@ -50,7 +50,7 @@
 
     signing = {
       signByDefault = true;
-      key = "XXXXXXXXXX";
+      key = null;
     };
 
     lfs = { enable = true; };
@@ -60,5 +60,6 @@
     enable = true;
     enableFishIntegration = true;
     enableSshSupport = true;
+    pinentryPackage = pkgs.pinentry-tty;
   };
 }
