@@ -62,6 +62,10 @@
         src = pkgs.fishPlugins.bass.src;
       }
       {
+        name = "sponge";
+        src = pkgs.fishPlugins.sponge.src;
+      }
+      {
         name = "fish-abbreviation-tips";
         src = pkgs.fetchFromGitHub {
           owner = "gazorby";
