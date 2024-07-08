@@ -16,6 +16,8 @@
 
   home.stateVersion = "24.05";
 
+  news.display = "show";
+
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
