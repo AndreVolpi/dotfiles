@@ -32,6 +32,7 @@
     bat
     htop
     openssh
+    cascadia-code
   ];
 
   home.file = { };
@@ -40,4 +41,6 @@
   programs.home-manager.enable = true;
 
   programs.bash.enable = true;
+
+  fonts.fontconfig.enable = true;
 }
