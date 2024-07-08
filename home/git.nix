@@ -18,6 +18,7 @@
     };
 
     extraConfig = {
+      init.defaultBranch = "main";
       pull = { rebase = true; };
       commit = { verbose = true; };
       color = {
@@ -44,9 +45,16 @@
           insteadOf = "https://github.com";
         };
       };
+      rerere = {
+        enabled = true;
+        autoUpdate = true;
+      };
     };
 
-    ignores = [ ];
+    ignores = [
+      # direnv caches
+      ".direnv/"
+    ];
 
     signing = {
       signByDefault = true;
