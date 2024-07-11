@@ -62,6 +62,7 @@ in
     ./lsp.nix
     ./neo-tree.nix
     ./noice.nix
+    ./p4.nix
     ./spider.nix
     ./startify.nix
     ./surround.nix
