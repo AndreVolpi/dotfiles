@@ -35,6 +35,7 @@
     htop
     openssh
     cascadia-code
+    gping
   ];
 
   home.file = { };
