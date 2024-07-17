@@ -19,10 +19,11 @@
         },
       })
 
-      vim.keymap.set('n', '<C-p>', '<cmd>Telescope fd<cr>')
-      vim.keymap.set('n', '<C-f>f', '<cmd>Telescope live_grep<cr>')
-      vim.keymap.set('n', '<C-f>b', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
-      vim.keymap.set('n', '<leader>b', '<cmd>Telescope buffers<cr>')
+      vim.keymap.set('n', '<leader>fd', '<cmd>Telescope fd<cr>')
+      vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
+      vim.keymap.set('n', '<leader>ff', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
+      vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
+      vim.keymap.set('n', '<leader>fr', '<cmd>Telescope resume<cr>')
     '';
   };
 }
