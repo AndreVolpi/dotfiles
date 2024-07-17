@@ -43,7 +43,11 @@
 
   programs.home-manager.enable = true;
 
-  programs.bash.enable = true;
+  programs.bash = {
+    enable = true;
+
+    initExtra = "tmux a";
+  };
 
   fonts.fontconfig.enable = true;
 }
