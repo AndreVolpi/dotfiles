@@ -44,7 +44,7 @@
         setw -g automatic-rename on   # rename window to reflect current program
         set -g renumber-windows on    # renumber windows when a window is closed
         set -g set-titles on          # set terminal title
-        set-option -g set-titles-string "#h ❐ #S ● #I #W"
+        set-option -g set-titles-string "❐ #S ● #I #W"
 
         bind R source-file '~/.config/tmux/tmux.conf'
 
@@ -58,7 +58,7 @@
         bind -T copy-mode-vi y send -X copy-selection-and-cancel
         bind -T copy-mode-vi Escape send -X cancel
 
-        set-option -g automatic-rename-format '#{s/.home.andre.volpi@ca.SEGA.Internal/~/:pane_current_path}'
+        set-option -g automatic-rename-format '#{s/.home.kurumas/~/:pane_current_path}'
 
         # window navigation
         unbind n
