@@ -13,7 +13,7 @@
       vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { ['silent'] = true })
       vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { ['silent'] = true })
       vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { ['silent'] = true })
-      vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, { ['silent'] = true })
+      vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format, { ['silent'] = true })
       vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { ['silent'] = true })
       vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { ['silent'] = true })
       vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { ['silent'] = true })
