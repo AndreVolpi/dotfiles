@@ -40,11 +40,6 @@
       };
       apply = { whitespace = "fix"; };
       core = { editor = "nvim"; };
-      url = {
-        "https://oauth2:GITHUB_TOKEN@github.com" = {
-          insteadOf = "https://github.com";
-        };
-      };
       rerere = {
         enabled = true;
         autoUpdate = true;
@@ -54,6 +49,9 @@
     ignores = [
       # direnv caches
       ".direnv/"
+      ".envrc"
+      "shell.nix"
+      ".nvim.lua"
     ];
 
     signing = {
