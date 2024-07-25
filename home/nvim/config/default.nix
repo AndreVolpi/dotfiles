@@ -32,7 +32,6 @@ let
     barbecue-nvim
     clever-f-vim
     codewindow-nvim
-    context-vim
     hmts-nvim
     rainbow
     nvim-scrollview
