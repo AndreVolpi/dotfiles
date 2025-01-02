@@ -58,7 +58,8 @@
         bind -T copy-mode-vi y send -X copy-selection-and-cancel
         bind -T copy-mode-vi Escape send -X cancel
 
-        set-option -g automatic-rename-format '#{s/.home.kurumas/~/:pane_current_path}'
+        set-option -g automatic-rename on
+        set-option -g automatic-rename-format '#{b:pane_current_path}'
 
         # window navigation
         unbind n
