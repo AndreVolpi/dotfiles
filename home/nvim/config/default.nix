@@ -59,6 +59,7 @@ in
     ./indent-blankline.nix
     ./keymaps.nix
     ./lsp.nix
+    ./llm.nix
     ./neo-tree.nix
     ./noice.nix
     ./p4.nix

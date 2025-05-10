@@ -36,6 +36,8 @@
     openssh
     cascadia-code
     gping
+    docker
+    docker-compose
   ];
 
   home.file = { };
