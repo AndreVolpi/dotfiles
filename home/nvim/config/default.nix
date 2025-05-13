@@ -77,8 +77,6 @@ in
     plugins = nPlugins ++ ePlugins ++ aPlugins;
 
     extraLuaConfig = /* lua */ ''
-      vim.o.foldenable = false
-
       -- Auto-Save
       require("auto-save").setup {}
 
