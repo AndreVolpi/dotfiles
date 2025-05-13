@@ -16,7 +16,7 @@ git clone https://github.com/AndreVolpi/dotfiles.git ~/dotfiles
 
 - Activate the environment
 ```sh
-nix run home-manager/release-24.05 -- init --switch ~/dotfiles
+nix run home-manager/release-24.11 -- init --switch ~/dotfiles
 ```
 *This may fail due to .bashrc and .profile, follow the instructions on the error message*
 

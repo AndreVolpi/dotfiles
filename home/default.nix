@@ -14,7 +14,7 @@
   home.username = "kurumas";
   home.homeDirectory = "/home/kurumas";
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11";
 
   news.display = "show";
 
