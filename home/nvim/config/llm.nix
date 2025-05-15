@@ -120,6 +120,16 @@ in
         },
       })
 
+      vim.keymap.set({ "n", "v" }, "<LocalLeader>cca", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+      vim.keymap.set({ "n", "v" }, "<LocalLeader>cct", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+      vim.keymap.set("v", "cca", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+
+      vim.keymap.set("v", "<LocalLeader>cca", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+
+
+      -- Expand 'cc' into 'CodeCompanion' in the command line
+      vim.cmd([[cab cc CodeCompanion]])
+
       M:init()
     '';
   };
