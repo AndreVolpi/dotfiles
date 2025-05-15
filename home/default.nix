@@ -29,6 +29,7 @@
     bat
     binutils
     cascadia-code
+    comma
     coreutils
     docker
     docker-compose
