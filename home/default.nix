@@ -23,6 +23,7 @@
   home.sessionVariables = { };
 
   nixpkgs.config.allowUnfree = true;
+  nix.gc.automatic = true;
 
   home.packages = with pkgs; [
     bat
