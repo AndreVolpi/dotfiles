@@ -97,7 +97,7 @@ in
               },
               schema = {
                 model = {
-                  default = 'codellama:7b',
+                  default = 'qwen2.5-coder:32b',
                 },
               },
             })
@@ -141,16 +141,10 @@ in
       sleep 5  # Adjust sleep if needed to ensure Ollama is fully up and ready
     end
 
-    # Now, pull codellama:13b if it's not already present
-    if not docker exec ollama ollama list | grep -q 'codellama.*13b'
-      echo "[fish] Pulling codellama:13b model..."
-      docker exec ollama ollama pull codellama:13b
-    end
-
-    # Now, pull codellama:7b if it's not already present
-    if not docker exec ollama ollama list | grep -q 'codellama.*7b'
-      echo "[fish] Pulling codellama:7b model..."
-      docker exec ollama ollama pull codellama:7b
+    # Pull the AI model if it's not already present
+    if not docker exec ollama ollama list | grep -q 'qwen2.5-coder:32b'
+      echo "[fish] Pulling qwen2.5-coder:32b model..."
+      docker exec ollama ollama pull qwen2.5-coder:32b
     end
   '';
 }
