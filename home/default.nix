@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./aider.nix
     ./direnv.nix
     ./eza.nix
     ./fish.nix

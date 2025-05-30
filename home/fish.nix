@@ -7,7 +7,34 @@
 
   programs.fish = {
     enable = true;
-    interactiveShellInit = ''
+
+    shellInit = /* fish */ ''
+      # Check if Ollama container is running
+      if not docker ps --format '{{.Names}}' | grep -q '^ollama$'
+        # If it's not running, stop and remove any leftover container with the same name
+        echo "[fish] Stopping any existing Ollama container..."
+        docker stop ollama 2>/dev/null || true
+        docker rm ollama 2>/dev/null || true
+
+        echo "[fish] Starting Ollama..."
+        # Create a Docker volume if not present
+        docker volume create ollama_data >/dev/null
+        # Run Ollama container if it's not running
+        docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama:latest
+        # Ensure Ollama is fully started before pulling the model
+        sleep 5  # Adjust sleep if needed to ensure Ollama is fully up and ready
+      end
+
+      # Pull the AI model if it's not already present
+      if not docker exec ollama ollama list | grep -q 'qwen2.5-coder:32b'
+        echo "[fish] Pulling qwen2.5-coder:32b model..."
+        docker exec ollama ollama pull qwen2.5-coder:32b
+      end
+
+      set -gx OLLAMA_API_BASE http://127.0.0.1:11434
+    '';
+
+    interactiveShellInit = /* fish */ ''
       set fish_greeting # Disable greeting
 
       # AWS

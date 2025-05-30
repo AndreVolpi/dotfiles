@@ -27,6 +27,7 @@ let
 
   # nPlugins are normally available in nixpkgs
   nPlugins = with pkgs.vimPlugins; [
+    aider-nvim
     auto-save-nvim
     auto-session
     barbecue-nvim
@@ -59,7 +60,6 @@ in
     ./indent-blankline.nix
     ./keymaps.nix
     ./lsp.nix
-    ./llm.nix
     ./neo-tree.nix
     ./noice.nix
     ./p4.nix
@@ -117,6 +117,16 @@ in
 
       -- Zero
       require('zero').setup()
+
+      -- Aider
+      require('aider').setup({
+        vim = true, 
+        ignore_buffers = {},
+        border = {
+          style = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, -- or e.g. "rounded"
+          color = "#fab387",
+        },
+      })
     '';
   };
 }

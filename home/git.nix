@@ -52,6 +52,7 @@
       ".envrc"
       "shell.nix"
       ".nvim.lua"
+      ".aider*"
     ];
 
     signing = {
