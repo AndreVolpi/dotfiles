@@ -77,6 +77,8 @@ in
     plugins = nPlugins ++ ePlugins ++ aPlugins;
 
     extraLuaConfig = /* lua */ ''
+      vim.g.mapleader = "\\"
+
       -- Auto-Save
       require("auto-save").setup {}
 
