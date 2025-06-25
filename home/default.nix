@@ -40,6 +40,8 @@
     gping
     htop
     jq
+    lazydocker
+    lazysql
     less
     moreutils
     openssh
