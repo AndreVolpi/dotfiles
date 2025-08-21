@@ -1,0 +1,4 @@
+# Neovim swap and session files
+*.swp
+*.swo
+nvim_sessions/
