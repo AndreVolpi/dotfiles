@@ -1,0 +1,2 @@
+[scripts]
+  install_packages = "scripts/install_packages.sh"

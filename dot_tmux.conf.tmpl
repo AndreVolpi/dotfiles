@@ -1,0 +1,102 @@
+# -----------------------------
+# Environment / paths
+# -----------------------------
+# Prepend Homebrew / Linux common paths
+{{- if eq .chezmoi.os "darwin" -}}
+set-environment -g PATH "/opt/homebrew/bin:/usr/local/bin:/bin:/usr/bin"
+{{ end }}
+set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins"
+
+# -----------------------------
+# Basic terminal settings
+# -----------------------------
+set -g default-terminal "screen-256color"
+set -g base-index 1
+setw -g pane-base-index 1
+set -g history-limit 50000
+set -g mouse on
+set -g status-keys vi
+set -g mode-keys vi
+setw -g aggressive-resize off
+setw -g clock-mode-style 24
+set -s escape-time 0
+set-option -g status on
+set-option -g status-position top
+set-option -g focus-events on
+set-option -a terminal-features "$SHELL:RGB"
+
+# -----------------------------
+# Key bindings
+# -----------------------------
+bind-key -N "Kill the current window" & kill-window
+bind-key -N "Kill the current pane" x kill-pane
+
+unbind n
+unbind p
+bind -r C-h previous-window
+bind -r C-l next-window
+bind Tab last-window
+
+bind Enter copy-mode
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi C-v send -X rectangle-toggle
+bind -T copy-mode-vi y send -X copy-selection-and-cancel
+bind -T copy-mode-vi Escape send -X cancel
+
+# -----------------------------
+# Window / status options
+# -----------------------------
+setw -g automatic-rename on
+set -g renumber-windows on
+set -g set-titles on
+set-option -g set-titles-string "❐ #S ● #I #W"
+set-option -g automatic-rename on
+set-option -g automatic-rename-format '#{b:pane_current_path}'
+
+# -----------------------------
+# TPM plugins
+# -----------------------------
+set -g @plugin 'tmux-plugins/tpm'                 # Plugin manager
+set -g @plugin 'odedlaz/tmux-onedark-theme'       # Theme
+set -g @plugin 'nhdaly/tmux-better-mouse-mode'    # Improved mouse copy
+set -g @plugin 'tmux-plugins/tmux-pain-control'   # Pane resizing
+set -g @plugin 'tmux-plugins/tmux-resurrect'      # Auto restart
+set -g @plugin 'tmux-plugins/tmux-continuum'      # Restore sessions
+
+# -----------------------------
+# Plugin-specific options
+# -----------------------------
+# Better mouse mode
+set -g @scroll-without-changing-pane "on"
+
+# Pain control (pane resizing)
+set -g @pane_resize "10"
+
+# Continuum (session restore)
+set -g @continuum-restore "on"
+
+# -----------------------------
+# Extra UI / behavior
+# -----------------------------
+# Optional: toggle mouse script
+bind m run "cut -c3- '#{TMUX_CONF}' | sh -s _toggle_mouse"
+
+# Reload tmux config
+bind R source-file "~/.config/tmux/tmux.conf"
+
+# Define a universal copy command
+if-shell "command -v pbcopy >/dev/null 2>&1" \
+  'set -g @clipboard_cmd "pbcopy"' \
+  'if-shell "command -v wl-copy >/dev/null 2>&1" \
+     "set -g @clipboard_cmd \"wl-copy\"" \
+     "if-shell \"command -v xclip >/dev/null 2>&1\" \
+        \"set -g @clipboard_cmd \\\"xclip -selection clipboard\\\"\" \
+        \"set -g @clipboard_cmd cat\""'  # fallback (does nothing)
+
+# Bind y to copy into system clipboard
+bind -T copy-mode-vi y send -X copy-pipe-and-cancel "#{@clipboard_cmd}"
+
+# -----------------------------
+# Initialize TPM (always last)
+# -----------------------------
+run '~/.tmux/plugins/tpm/tpm'
