@@ -2,7 +2,9 @@
 # Environment / paths
 # -----------------------------
 # Prepend Homebrew / Linux common paths
+{{- if eq .chezmoi.os "darwin" -}}
 set-environment -g PATH "/opt/homebrew/bin:/usr/local/bin:/bin:/usr/bin"
+{{ end }}
 set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins"
 
 # -----------------------------
@@ -20,6 +22,8 @@ setw -g clock-mode-style 24
 set -s escape-time 0
 set-option -g status on
 set-option -g status-position top
+set-option -g focus-events on
+set-option -a terminal-features "$SHELL:RGB"
 
 # -----------------------------
 # Key bindings

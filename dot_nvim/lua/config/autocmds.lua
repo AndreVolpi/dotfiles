@@ -19,5 +19,5 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "setl ts=4 sts=4 sw=4",
 })
 vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function() vim.highlight.on_yank() end,
+  callback = function() vim.hl.on_yank() end,
 })

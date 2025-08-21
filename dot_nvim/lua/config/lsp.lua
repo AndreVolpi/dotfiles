@@ -11,7 +11,6 @@ vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { silent 
 vim.keymap.set("n", "K", vim.lsp.buf.hover, { silent = true })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { silent = true })
 vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>")
-vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>")
 vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>")
 vim.keymap.set("n", "<leader>D", "<cmd>Telescope lsp_type_definitions<CR>")
 

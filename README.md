@@ -2,18 +2,28 @@
 
 ## Setup
 
-- Download/clone the repositorie
-
 - Install these dotfiles with:
 ```sh
-./install.sh
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply AndreVolpi$
 ```
 
 - It will also install the Cascadia Code Font, enable it where desired.
 
+- Install ASDF plugins for the desired languages:
+```sh
+asdf plugin add golang https://github.com/asdf-community/asdf-golang.git
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+asdf plugin add python https://github.com/danhper/asdf-python.git
+asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+
+asdf install
+```
+
 ## Details
 
 This is the dotfiles setup which I use for my Ubuntu and MacOS.
+[Chezmoi](https://www.chezmoi.io/) is used to manage the dotfiles themselves as well as package installation.
+[ASDF](https://asdf-vm.com) is used to manage languages.
 
 To use it with other systems, code changes are likely to be needed. Feel free to send a Pull Request.
 
