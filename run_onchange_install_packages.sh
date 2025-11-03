@@ -6,10 +6,7 @@ OS="$(uname -s)"
 COMMON_PACKAGES=(
   bat
   coreutils
-  docker
-  docker-compose
   eza
-  fd
   fish
   fzf
   gnupg
@@ -19,17 +16,15 @@ COMMON_PACKAGES=(
   less
   moreutils
   neovim
-  openssh
   ripgrep
   tmux
   wget
-  asdf
   gawk
   autoconf
 )
 
-LINUX_EXTRA=(build-essential binutils gnumake fonts-cascadia-code libyaml-dev zlib1g-dev libffi-dev libgmp-dev rustc)
-MAC_EXTRA=(make readline libyaml gmp rust)
+LINUX_EXTRA=(build-essential binutils fonts-cascadia-code libyaml-dev zlib1g-dev libffi-dev libgmp-dev rustc fd-find)
+MAC_EXTRA=(make readline libyaml gmp rust fd docker docker-compose asdf)
 
 if [[ "$OS" == "Linux" ]]; then
     sudo apt update
