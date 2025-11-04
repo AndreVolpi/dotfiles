@@ -82,7 +82,7 @@ set -g @continuum-restore "on"
 bind m run "cut -c3- '#{TMUX_CONF}' | sh -s _toggle_mouse"
 
 # Reload tmux config
-bind R source-file "~/.config/tmux/tmux.conf"
+bind R source-file "~/.tmux.conf"
 
 # Define a universal copy command
 if-shell "command -v pbcopy >/dev/null 2>&1" \

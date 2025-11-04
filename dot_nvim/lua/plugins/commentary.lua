@@ -1,1 +1,0 @@
-return { "shoukoo/commentary.nvim" }

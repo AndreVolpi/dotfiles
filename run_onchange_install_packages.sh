@@ -15,21 +15,20 @@ COMMON_PACKAGES=(
   jq
   less
   moreutils
-  neovim
   ripgrep
   tmux
   wget
   gawk
   autoconf
-  starship
 )
 
-LINUX_EXTRA=(build-essential binutils fonts-cascadia-code libyaml-dev zlib1g-dev libffi-dev libgmp-dev rustc fd-find)
-MAC_EXTRA=(make readline libyaml gmp rust fd docker docker-compose asdf)
+LINUX_EXTRA=(build-essential binutils fonts-cascadia-code libyaml-dev zlib1g-dev libffi-dev libgmp-dev rustc fd-find ruby-full)
+MAC_EXTRA=(make readline libyaml gmp rust fd docker docker-compose asdf neovim)
 
 if [[ "$OS" == "Linux" ]]; then
     sudo apt update
     sudo apt install -y "${COMMON_PACKAGES[@]}" "${LINUX_EXTRA[@]}"
+    sudo snap install nvim --classic
 elif [[ "$OS" == "Darwin" ]]; then
     if ! command -v brew &>/dev/null; then
         echo "Installing Homebrew..."
@@ -40,3 +39,6 @@ elif [[ "$OS" == "Darwin" ]]; then
     brew install "${COMMON_PACKAGES[@]}" "${MAC_EXTRA[@]}" >/dev/null 2>&1 || true
     brew install --cask docker font-cascadia-code-pl >/dev/null 2>&1 || true
 fi
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+curl -sS https://starship.rs/install.sh | sh

@@ -21,23 +21,6 @@ return {
         }
         
         require("mason-tool-installer").setup {
-          ensure_installed = {
-            -- Formatters
-            "prettier",       -- JS/TS
-            "stylua",         -- Lua
-            "black",          -- Python
-            "rubocop",        -- Ruby
-            "gofumpt",        -- Go
-        
-            -- Linters
-            "eslint_d",       -- JS/TS
-            "flake8",         -- Python
-            "golangci-lint",  -- Go
-        
-            -- Extra utils
-            "yamllint",
-            "jsonlint",
-          },
           auto_update = true,
           run_on_start = true,
         }
