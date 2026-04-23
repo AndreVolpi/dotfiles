@@ -24,23 +24,21 @@ set-option -g status on
 set-option -g status-position top
 set-option -g focus-events on
 set-option -a terminal-features "$SHELL:RGB"
+set -g set-clipboard on
 
 # -----------------------------
 # Key bindings
 # -----------------------------
-bind-key -N "Kill the current window" & kill-window
-bind-key -N "Kill the current pane" x kill-pane
+bind -N "Kill the current window" & kill-window
+bind -N "Kill the current pane" x kill-pane
 
 unbind n
 unbind p
-bind -r C-h previous-window
-bind -r C-l next-window
 bind Tab last-window
 
 bind Enter copy-mode
 bind -T copy-mode-vi v send -X begin-selection
 bind -T copy-mode-vi C-v send -X rectangle-toggle
-bind -T copy-mode-vi y send -X copy-selection-and-cancel
 bind -T copy-mode-vi Escape send -X cancel
 
 # -----------------------------
@@ -56,12 +54,14 @@ set-option -g automatic-rename-format '#{b:pane_current_path}'
 # -----------------------------
 # TPM plugins
 # -----------------------------
-set -g @plugin 'tmux-plugins/tpm'                 # Plugin manager
-set -g @plugin 'odedlaz/tmux-onedark-theme'       # Theme
-set -g @plugin 'nhdaly/tmux-better-mouse-mode'    # Improved mouse copy
-set -g @plugin 'tmux-plugins/tmux-pain-control'   # Pane resizing
-set -g @plugin 'tmux-plugins/tmux-resurrect'      # Auto restart
-set -g @plugin 'tmux-plugins/tmux-continuum'      # Restore sessions
+set -g @plugin 'tmux-plugins/tpm'                   # Plugin manager
+set -g @plugin 'odedlaz/tmux-onedark-theme'         # Theme
+set -g @plugin 'nhdaly/tmux-better-mouse-mode'      # Improved mouse copy
+set -g @plugin 'tmux-plugins/tmux-pain-control'     # Pane resizing
+set -g @plugin 'tmux-plugins/tmux-resurrect'        # Manual save/restore (prefix+C-s / prefix+C-r)
+set -g @plugin 'tmux-plugins/tmux-yank'             # Cross-platform clipboard (xclip/wl-copy/pbcopy/WSL clip.exe)
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight' # Status-bar indicator when prefix is pressed
+set -g @plugin 'tmux-plugins/tmux-sensible'         # Sensible basic defaults
 
 # -----------------------------
 # Plugin-specific options
@@ -72,9 +72,6 @@ set -g @scroll-without-changing-pane "on"
 # Pain control (pane resizing)
 set -g @pane_resize "10"
 
-# Continuum (session restore)
-set -g @continuum-restore "on"
-
 # -----------------------------
 # Extra UI / behavior
 # -----------------------------
@@ -84,19 +81,14 @@ bind m run "cut -c3- '#{TMUX_CONF}' | sh -s _toggle_mouse"
 # Reload tmux config
 bind R source-file "~/.tmux.conf"
 
-# Define a universal copy command
-if-shell "command -v pbcopy >/dev/null 2>&1" \
-  'set -g @clipboard_cmd "pbcopy"' \
-  'if-shell "command -v wl-copy >/dev/null 2>&1" \
-     "set -g @clipboard_cmd \"wl-copy\"" \
-     "if-shell \"command -v xclip >/dev/null 2>&1\" \
-        \"set -g @clipboard_cmd \\\"xclip -selection clipboard\\\"\" \
-        \"set -g @clipboard_cmd cat\""'  # fallback (does nothing)
-
-# Bind y to copy into system clipboard
-bind -T copy-mode-vi y send -X copy-pipe-and-cancel "#{@clipboard_cmd}"
-
 # -----------------------------
 # Initialize TPM (always last)
 # -----------------------------
 run '~/.tmux/plugins/tpm/tpm'
+
+# -----------------------------
+# Binding overrides (must run AFTER TPM so plugin-bound keys are overwritten)
+# -----------------------------
+# tmux-pain-control binds prefix+C-h/C-l to pane navigation; we want window nav
+bind -r C-h previous-window
+bind -r C-l next-window
