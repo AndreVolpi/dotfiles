@@ -1,3 +1,8 @@
+# Managed by chezmoi. Machine-specific secrets (Vault/GitLab tokens, per-host
+# env vars) live in ~/.config/fish/conf.d/secrets.fish, which is NOT managed
+# by chezmoi. Fish auto-sources everything in conf.d/ — nothing to include here.
+# Do not commit secrets to this file.
+
 # Disable greeting
 set fish_greeting
 

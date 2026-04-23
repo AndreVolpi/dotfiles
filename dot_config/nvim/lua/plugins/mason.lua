@@ -12,10 +12,11 @@ return {
 
         require("mason-lspconfig").setup {
           ensure_installed = {
-            "gopls",        -- Go
-            "ts_ls",     -- Node/TS
-            "ruby_lsp",      -- Ruby
-            "pyright",      -- Python
+            "gopls",    -- Go
+            "ts_ls",    -- Node/TS
+            "ruby_lsp", -- Ruby
+            "pyright",  -- Python
+            "marksman", -- Markdown
           },
           automatic_installation = true,
         }

@@ -1,3 +1,10 @@
+# Managed by chezmoi. Machine-specific values (signing keys, OAuth token URL
+# rewrites, work email, ssh overrides) live in ~/.gitconfig.local, which is
+# NOT managed by chezmoi and must be included from here via:
+#   [include]
+#     path = ~/.gitconfig.local
+# Do not commit secrets to this file.
+
 [user]
   name = André Volpi
   email = github@longfox.es
