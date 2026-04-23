@@ -44,8 +44,13 @@ elif [[ "$OS" == "Darwin" ]]; then
     brew install --cask docker font-cascadia-code-pl >/dev/null 2>&1 || true
 fi
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-curl -sS https://starship.rs/install.sh | sh
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+if ! command -v starship &>/dev/null; then
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
+fi
 
 if command -v npm &>/dev/null; then
     npm install -g "${NPM_GLOBAL_PACKAGES[@]}"
