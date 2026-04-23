@@ -25,6 +25,10 @@ COMMON_PACKAGES=(
 LINUX_EXTRA=(build-essential binutils fonts-cascadia-code libyaml-dev zlib1g-dev libffi-dev libgmp-dev rustc fd-find ruby-full)
 MAC_EXTRA=(make readline libyaml gmp rust fd docker docker-compose asdf neovim)
 
+NPM_GLOBAL_PACKAGES=(
+  tree-sitter-cli
+)
+
 if [[ "$OS" == "Linux" ]]; then
     sudo apt update
     sudo apt install -y "${COMMON_PACKAGES[@]}" "${LINUX_EXTRA[@]}"
@@ -42,3 +46,9 @@ fi
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 curl -sS https://starship.rs/install.sh | sh
+
+if command -v npm &>/dev/null; then
+    npm install -g "${NPM_GLOBAL_PACKAGES[@]}"
+else
+    echo "npm not found; skipping ${NPM_GLOBAL_PACKAGES[*]}. Install node (asdf install nodejs) then re-run."
+fi
