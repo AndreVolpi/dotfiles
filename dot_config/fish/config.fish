@@ -60,3 +60,8 @@ if not contains $_asdf_shims $PATH
     set -gx --prepend PATH $_asdf_shims
 end
 set --erase _asdf_shims
+
+# Ensure ~/.local/bin is on PATH (pip --user, pipx, etc.)
+if not contains $HOME/.local/bin $PATH
+    set -gx --prepend PATH $HOME/.local/bin
+end

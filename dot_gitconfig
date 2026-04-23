@@ -59,3 +59,9 @@
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
   required = true
+
+; Machine-specific overrides (email, signing keys, OAuth URL rewrites, etc.)
+; live in ~/.gitconfig.local, which is NOT managed by chezmoi. Git silently
+; ignores a missing include path, so this is safe across machines.
+[include]
+  path = ./.gitconfig.local
