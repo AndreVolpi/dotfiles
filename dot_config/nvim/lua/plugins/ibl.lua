@@ -1,5 +1,6 @@
 return {
-  "benborla/ibl.nvim",
+  "lukas-reineke/indent-blankline.nvim",
+  main = "ibl",
   config = function()
     local hooks = require("ibl.hooks")
     local highlight = {
