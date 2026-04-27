@@ -20,6 +20,7 @@ COMMON_PACKAGES=(
   wget
   gawk
   autoconf
+  opentofu
 )
 
 LINUX_EXTRA=(build-essential binutils fonts-cascadia-code libyaml-dev zlib1g-dev libffi-dev libgmp-dev rustc fd-find ruby-full)
