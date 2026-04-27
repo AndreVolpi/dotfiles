@@ -1,6 +1,9 @@
 return {
-  "Pocco81/auto-save.nvim",
-  config = function()
-    require("auto-save").setup({})
-  end
+  "okuuva/auto-save.nvim",
+  version = "*",
+  cmd = "ASToggle",
+  event = { "InsertLeave", "TextChanged" },
+  opts = {
+    debounce_delay = 30000,
+  },
 }
