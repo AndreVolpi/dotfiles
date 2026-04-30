@@ -1,1 +1,1 @@
-return { "shoukoo/commentary.nvim" }
+return { "numToStr/Comment.nvim" }
