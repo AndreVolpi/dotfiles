@@ -1,14 +1,14 @@
 return {
-    "mason-org/mason.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "williamboman/mason-lspconfig.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-    },
-    opts = {},
-    build = ":MasonUpdate",
-    config = function()
-        require("mason").setup()
+	"mason-org/mason.nvim",
+	dependencies = {
+		"neovim/nvim-lspconfig",
+		"williamboman/mason-lspconfig.nvim",
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+	},
+	opts = {},
+	build = ":MasonUpdate",
+	config = function()
+		require("mason").setup()
 
 		require("mason-lspconfig").setup({
 			ensure_installed = {
@@ -55,5 +55,5 @@ return {
 			auto_update = true,
 			run_on_start = true,
 		})
-    end,
+	end,
 }

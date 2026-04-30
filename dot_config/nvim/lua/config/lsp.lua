@@ -15,14 +15,14 @@ vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>")
 vim.keymap.set("n", "<leader>D", "<cmd>Telescope lsp_type_definitions<CR>")
 
 lsp_on_attach = function(client, bufnr)
-  vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+	vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 end
 
 lsp_capabilities = function()
-  return require("cmp_nvim_lsp").default_capabilities()
+	return require("cmp_nvim_lsp").default_capabilities()
 end
 
 lsp_setup = {
-  capabilities = lsp_capabilities(),
-  on_attach = lsp_on_attach,
+	capabilities = lsp_capabilities(),
+	on_attach = lsp_on_attach,
 }
