@@ -8,7 +8,6 @@ return {
 	init = function()
 		local telescope = require("telescope")
 		telescope.load_extension("ui-select")
-		telescope.load_extension("session-lens")
 		telescope.load_extension("textcase")
 
 		local map = vim.keymap.set
