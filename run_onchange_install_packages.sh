@@ -26,9 +26,8 @@ COMMON_PACKAGES=(
 LINUX_EXTRA=(build-essential binutils fonts-cascadia-code libyaml-dev zlib1g-dev libffi-dev libgmp-dev rustc fd-find ruby-full)
 MAC_EXTRA=(make readline libyaml gmp rust fd docker docker-compose asdf neovim)
 
-NPM_GLOBAL_PACKAGES=(
-  tree-sitter-cli
-)
+NPM_GLOBAL_PACKAGES=(tree-sitter-cli)
+PIP_GLOBAL_PACKAGES=(pytest-playwright)
 
 if [[ "$OS" == "Linux" ]]; then
     sudo apt update
@@ -58,3 +57,11 @@ if command -v npm &>/dev/null; then
 else
     echo "npm not found; skipping ${NPM_GLOBAL_PACKAGES[*]}. Install node (asdf install nodejs) then re-run."
 fi
+
+if command -v pip &>/dev/null; then
+    pip install "${PIP_GLOBAL_PACKAGES[@]}"
+else
+    echo "pip not found; skipping ${PIP_GLOBAL_PACKAGES[*]}. Install python (asdf install python) then re-run."
+fi
+
+curl -LsSf https://aider.chat/install.sh | sh

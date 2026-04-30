@@ -3,3 +3,4 @@
 .DS_Store
 # Claude Code session state
 .claude/
+.aider*
