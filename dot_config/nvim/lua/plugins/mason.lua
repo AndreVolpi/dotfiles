@@ -10,20 +10,50 @@ return {
     config = function()
         require("mason").setup()
 
-        require("mason-lspconfig").setup {
-          ensure_installed = {
-            "gopls",    -- Go
-            "ts_ls",    -- Node/TS
-            "ruby_lsp", -- Ruby
-            "pyright",  -- Python
-            "marksman", -- Markdown
-          },
-          automatic_installation = true,
-        }
-        
-        require("mason-tool-installer").setup {
-          auto_update = true,
-          run_on_start = true,
-        }
+		require("mason-lspconfig").setup({
+			ensure_installed = {
+				"bashls", -- Bash, Sh, Zsh
+				"docker_language_server", -- Docker
+				"fish_lsp", -- Fish
+				"gopls", -- Go
+				"jsonls", -- JSON
+				"lua_ls", -- Lua
+				"marksman", -- Markdown
+				"ts_ls", -- Node/TS
+				"tofu_ls", -- OpenTofu
+				"postgres_lsp", -- Postgres
+				"pyright", -- Python
+				"ruby_lsp", -- Ruby
+				"harper_ls", -- TOML
+				"yamlls", -- YAML
+			},
+			automatic_installation = true,
+		})
+
+		require("mason-tool-installer").setup({
+			ensure_installed = {
+				-- Formatters
+				"gofumpt", -- Go
+				"prettier", -- JS/TS/HTML/CSS/JSON/Markdown/YAML
+				"stylua", -- Lua
+				"black", -- Python
+				"rubocop", -- Ruby
+
+				-- Linters
+				"golangci-lint", -- Go
+				"eslint_d", -- JS/TS
+				"selene", -- Lua
+				"tflint", -- OpenTofu
+				"flake8", -- Python
+
+				-- Extra utils
+				"dotenv-linter", -- Dotenv
+				"jsonlint", -- JSON
+				"mbake", -- Makefile
+				"yamllint", -- YAML
+			},
+			auto_update = true,
+			run_on_start = true,
+		})
     end,
 }

@@ -21,3 +21,19 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function() vim.hl.on_yank() end,
 })
+
+vim.filetype.add({
+	extension = {
+		tf = "opentofu",
+		tfvars = "opentofu-vars",
+	},
+})
+
+vim.filetype.add({
+	pattern = {
+		-- Matches anything like any.name.compose.yml or compose.any.name.yaml
+		[".*%.compose%.ya?ml"] = "yaml.docker-compose",
+		["compose%.?.*%.ya?ml"] = "yaml.docker-compose",
+	},
+}
+)
