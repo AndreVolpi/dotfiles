@@ -6,7 +6,6 @@ opt.showcmd = true
 opt.showmode = true
 opt.number = true
 opt.relativenumber = true
-opt.colorcolumn = "120"
 
 -- Files
 opt.autoread = true
