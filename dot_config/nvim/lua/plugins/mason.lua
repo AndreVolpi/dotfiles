@@ -24,7 +24,7 @@ return {
 				"postgres_lsp", -- Postgres
 				"pyright", -- Python
 				"ruby_lsp", -- Ruby
-				"harper_ls", -- TOML
+				"taplo", -- TOML
 				"yamlls", -- YAML
 			},
 			automatic_installation = true,
@@ -33,6 +33,7 @@ return {
 		require("mason-tool-installer").setup({
 			ensure_installed = {
 				-- Formatters
+				"beautysh", -- Bash, Sh, Zsh
 				"gofumpt", -- Go
 				"prettier", -- JS/TS/HTML/CSS/JSON/Markdown/YAML
 				"stylua", -- Lua
@@ -40,6 +41,7 @@ return {
 				"rubocop", -- Ruby
 
 				-- Linters
+				"hadolint", -- Docker
 				"golangci-lint", -- Go
 				"eslint_d", -- JS/TS
 				"selene", -- Lua
