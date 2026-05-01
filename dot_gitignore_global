@@ -1,3 +1,4 @@
 .nvim.lua
 .DS_Store
 .claude/
+.tool-versions
