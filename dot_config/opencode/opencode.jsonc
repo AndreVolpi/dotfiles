@@ -1,0 +1,51 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "shell": "fish",
+  "permission": {
+    "*": "allow",
+    "bash": "ask",
+  },
+  // Behaviour
+  "model": "opencode/minimax-m2.5-free",
+  "enabled_providers": [
+    "deepseek",
+    "opencode",
+    "groq"
+  ],
+  "provider": {
+    "deepseek": {
+      "options": {
+        "apiKey": "{env:DEEPSEEK_API_KEY}"
+      }
+    },
+    "groq": {
+      "options": {
+        "apiKey": "{env:GROQ_API_KEY}"
+      }
+    }
+  },
+  "default_agent": "build",
+  "snapshot": true,
+  // AI instructions
+  "instructions": [
+    "~/.config/opencode/base_instructions.md"
+  ],
+  // MCP Servers
+  "mcp": {
+    "ddg": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "duckduckgo-mcp-server"
+      ],
+      "enabled": true
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      // "headers": {
+      //   "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      // }
+    }
+  }
+}

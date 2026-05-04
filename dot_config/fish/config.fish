@@ -37,6 +37,10 @@ set FZF_ALT_C_OPTS "--preview 'tree -C {} | head -200'"
 
 set FZF_CTRL_R_OPTS "--sort --exact"
 
+# OpenCode
+set OPENCODE_ENABLE_EXA 1
+set OPENCODE_EXPERIMENTAL_LSP_TOOL true
+
 if test -f ~/.shell_aliases
     source ~/.shell_aliases
 end

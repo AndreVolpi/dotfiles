@@ -5,10 +5,10 @@ OS="$(uname -s)"
 
 COMMON_PACKAGES=(bat coreutils eza fish fzf gnupg gping htop jq less moreutils ripgrep tmux wget gawk autoconf opentofu)
 LINUX_EXTRA=(build-essential binutils fonts-cascadia-code libyaml-dev zlib1g-dev libffi-dev libgmp-dev rustc fd-find ruby-full)
-MAC_EXTRA=(make readline libyaml gmp rust fd docker docker-compose asdf neovim)
+MAC_EXTRA=(make readline libyaml gmp rust fd docker docker-compose asdf neovim anomalyco/tap/opencode)
 
 NPM_GLOBAL_PACKAGES=(tree-sitter-cli)
-PIP_GLOBAL_PACKAGES=(pytest-playwright)
+PIP_GLOBAL_PACKAGES=(pytest-playwright uv)
 
 if [[ "$OS" == "Linux" ]]; then
     sudo apt update
