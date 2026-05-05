@@ -10,7 +10,8 @@ set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins"
 # -----------------------------
 # Basic terminal settings
 # -----------------------------
-set -g default-terminal "screen-256color"
+set -g default-terminal "xterm-ghostty"
+set -as terminal-features ",xterm-ghostty:RGB,xterm-ghostty:Smulx"
 set -g base-index 1
 setw -g pane-base-index 1
 set -g history-limit 50000
@@ -23,7 +24,6 @@ set -s escape-time 0
 set-option -g status on
 set-option -g status-position top
 set-option -g focus-events on
-set-option -a terminal-features "$SHELL:RGB"
 set -g set-clipboard on
 
 # -----------------------------

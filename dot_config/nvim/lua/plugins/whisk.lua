@@ -1,0 +1,3 @@
+return {
+	"josstei/whisk.nvim",
+}
